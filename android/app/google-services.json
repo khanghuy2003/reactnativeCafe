@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "230269405013",
+    "firebase_url": "https://project-c396f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "project-c396f",
+    "storage_bucket": "project-c396f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230269405013:android:76959a3c82c2362d1f51dc",
+        "android_client_info": {
+          "package_name": "com.cafeshop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA_Cgtm3lMTVKpRhI_lh6PlkAHwHKs0kM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230269405013:android:c1b043c3b685d32a1f51dc",
+        "android_client_info": {
+          "package_name": "com.example.kotlin_cafeshop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA_Cgtm3lMTVKpRhI_lh6PlkAHwHKs0kM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230269405013:android:2207c87b3372d44f1f51dc",
+        "android_client_info": {
+          "package_name": "com.example.kotlin_playvideo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA_Cgtm3lMTVKpRhI_lh6PlkAHwHKs0kM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230269405013:android:9b5ef893cdab7fed1f51dc",
+        "android_client_info": {
+          "package_name": "com.example.shoesstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA_Cgtm3lMTVKpRhI_lh6PlkAHwHKs0kM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230269405013:android:c72903f8725d18a51f51dc",
+        "android_client_info": {
+          "package_name": "com.navigation1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA_Cgtm3lMTVKpRhI_lh6PlkAHwHKs0kM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

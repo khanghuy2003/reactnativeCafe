@@ -1,0 +1,882 @@
+{
+  "category": [
+    {
+      "id_category": "0",
+      "imageURL_category": "/categoryicon/categoryalldrinks64.png",
+      "name_category": "Tất cả"
+    },
+    {
+      "id_category": "1",
+      "imageURL_category": "/categoryicon/categorycoffee64.png",
+      "name_category": "Cà phê"
+    },
+    {
+      "id_category": "2",
+      "imageURL_category": "/categoryicon/categoryfruittea64.png",
+      "name_category": "Trà trái cây"
+    },
+    {
+      "id_category": "3",
+      "imageURL_category": "/categoryicon/categorytea64.png",
+      "name_category": "Trà"
+    },
+    {
+      "id_category": "4",
+      "imageURL_category": "/categoryicon/categorycake64.png",
+      "name_category": "Bánh ngọt"
+    }
+  ],
+  "mytube": {
+    "video": {
+      "-OH0rUNvEQ0NCuoMQf5R": {
+        "video_dislike": 12312,
+        "video_id": "-OH0rUNvEQ0NCuoMQf5R",
+        "video_like": 12312,
+        "video_name": "Test",
+        "video_thumbnail_url": "mytubedata/thumbnaildata/1737358918352.jpg",
+        "video_url": "mytubedata/videodata/1737345594939.mp4",
+        "video_view": 12312
+      },
+      "-OH1RHV-agSTE44Bm3F6": {
+        "video_dislike": 123,
+        "video_id": "-OH1RHV-agSTE44Bm3F6",
+        "video_like": 123,
+        "video_name": "test2",
+        "video_thumbnail_url": "mytubedata/thumbnaildata/1737358918352.jpg",
+        "video_url": "mytubedata/videodata/1737355241472.mp4",
+        "video_view": 123
+      },
+      "-OH1V-76FWizW8prJdXx": {
+        "video_dislike": 654,
+        "video_id": "-OH1V-76FWizW8prJdXx",
+        "video_like": 133,
+        "video_name": "test",
+        "video_thumbnail_url": "mytubedata/thumbnaildata/1737356214804.jpg",
+        "video_url": "mytubedata/videodata/1737356214791.mp4",
+        "video_view": 1000
+      },
+      "-OH1_xkSg3yjVqGJId85": {
+        "video_dislike": 212,
+        "video_id": "-OH1_xkSg3yjVqGJId85",
+        "video_like": 2323,
+        "video_name": "Bruno Mars - The Lazy Song (Official Music Video)",
+        "video_thumbnail_url": "mytubedata/thumbnaildata/1737358918352.jpg",
+        "video_url": "mytubedata/videodata/1737357777949.mp4",
+        "video_view": 13655
+      },
+      "-OH1eJ9zkNb5nSNxdGMs": {
+        "video_dislike": 232,
+        "video_id": "-OH1eJ9zkNb5nSNxdGMs",
+        "video_like": 2323,
+        "video_name": "PUPPY & DANGRANGTO - WRONG TIMES | Live at LAB RADAR | ZLAB",
+        "video_thumbnail_url": "mytubedata/thumbnaildata/1737358918352.jpg",
+        "video_url": "mytubedata/videodata/1737358918335.mp4",
+        "video_view": 123123
+      },
+      "-OH1oOTLW7fYj3rjnLsV": {
+        "video_dislike": 443,
+        "video_id": "-OH1oOTLW7fYj3rjnLsV",
+        "video_like": 3232,
+        "video_name": "PUPPY & DANGRANGTO - WRONG TIMES | Live at LAB RADAR | ZLAB",
+        "video_thumbnail_url": "mytubedata/thumbnaildata/1737358918352.jpg",
+        "video_url": "mytubedata/videodata/1737357865567.mp4",
+        "video_view": 23424
+      },
+      "-OH1oo2Bxq6sxSWrbmnn": {
+        "video_dislike": 34,
+        "video_id": "-OH1oo2Bxq6sxSWrbmnn",
+        "video_like": 324,
+        "video_name": "Wxrdie - TIM ANH GHEN (ft. LVK, Dangrangto, TeuYungBoy) [prod. by rev, sleepat6pm]",
+        "video_thumbnail_url": "mytubedata/thumbnaildata/1737355241484.jpg",
+        "video_url": "mytubedata/videodata/1737357969454.mp4",
+        "video_view": 123423
+      }
+    }
+  },
+  "products": [
+    {
+      "product_categoryid": 3,
+      "product_id": "0",
+      "product_imageurl": "/productimage/matchadaudo.png",
+      "product_name": "Trà Xanh Đậu Đỏ",
+      "product_price": 45000,
+      "product_salescount": 1500
+    },
+    {
+      "product_categoryid": 3,
+      "product_id": "1",
+      "product_imageurl": "/productimage/senvangcunang.png",
+      "product_name": "Trà Sen Vàng",
+      "product_price": 45000,
+      "product_salescount": 1000
+    },
+    {
+      "product_categoryid": 3,
+      "product_id": "2",
+      "product_imageurl": "/productimage/trathachxoai.png",
+      "product_name": "Trà Thạch Đào",
+      "product_price": 45000,
+      "product_salescount": 180
+    },
+    {
+      "product_categoryid": 3,
+      "product_id": "3",
+      "product_imageurl": "/productimage/travai.png",
+      "product_name": "Trà Thạch Vải",
+      "product_price": 45000,
+      "product_salescount": 170
+    },
+    {
+      "product_categoryid": 1,
+      "product_id": "4",
+      "product_imageurl": "/productimage/latte.png",
+      "product_name": "Latte",
+      "product_price": 99000,
+      "product_salescount": 1000
+    },
+    {
+      "product_categoryid": 1,
+      "product_id": "5",
+      "product_imageurl": "/productimage/capuchino.png",
+      "product_name": "Capucino",
+      "product_price": 99000,
+      "product_salescount": 1000
+    },
+    {
+      "product_categoryid": 2,
+      "product_id": "6",
+      "product_imageurl": "/productimage/chanhdavien.png",
+      "product_name": "Chanh Đá Viên",
+      "product_price": 55000,
+      "product_salescount": 170
+    },
+    {
+      "product_categoryid": 2,
+      "product_id": "7",
+      "product_imageurl": "/productimage/tacdavien.png",
+      "product_name": "Tắc Đá Viên",
+      "product_price": 55000,
+      "product_salescount": 170
+    },
+    {
+      "product_categoryid": 2,
+      "product_id": "8",
+      "product_imageurl": "/productimage/chanhdaxay.png",
+      "product_name": "Chanh Đá Xay",
+      "product_price": 55000,
+      "product_salescount": 170
+    },
+    {
+      "product_categoryid": 2,
+      "product_id": "9",
+      "product_imageurl": "/productimage/trathanhdao.png",
+      "product_name": "Trà Thanh Đào",
+      "product_price": 55000,
+      "product_salescount": 170
+    },
+    {
+      "product_categoryid": 4,
+      "product_id": "10",
+      "product_imageurl": "/productimage/cheesecake.png",
+      "product_name": "Cheese Cakes",
+      "product_price": 150000,
+      "product_salescount": 170
+    },
+    {
+      "product_categoryid": 4,
+      "product_id": "11",
+      "product_imageurl": "/productimage/pastry.png",
+      "product_name": "Pastry",
+      "product_price": 150000,
+      "product_salescount": 170
+    },
+    {
+      "product_categoryid": 4,
+      "product_id": "12",
+      "product_imageurl": "/productimage/muffin.png",
+      "product_name": "Muffin",
+      "product_price": 150000,
+      "product_salescount": 170
+    }
+  ],
+  "users": {
+    "AA3nA25jEmaoab88PVzI5noe6H32": {
+      "email": "thunaochiunoi123@gmail.com",
+      "orders": {
+        "-ODte0OfrIWCocdFtqYn": {
+          "address": "gia lai",
+          "name": "phú",
+          "orderDateTime": "12-12-2024 13:57:01",
+          "orderId": "-ODte0OfrIWCocdFtqYn",
+          "orderItems": [
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 3,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 177000,
+              "id": "-ODtdpv-h6j2BFOQmtkY"
+            },
+            {
+              "cartItemId": "7",
+              "cartItemImageUrl": "/productimage/tacdavien.png",
+              "cartItemName": "Tắc Đá Viên",
+              "cartItemQuantity": 2,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 124000,
+              "id": "-ODtdujXOw_pi1mtnY-a"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "123456789",
+          "status": "Đang xử lý",
+          "totalPaymentOrder": "301.000 đ"
+        }
+      },
+      "userId": "AA3nA25jEmaoab88PVzI5noe6H32"
+    },
+    "GKqA23ACFgNBnOnjllqfjBOOB2V2": {
+      "email": "2@gmail.com",
+      "orders": {
+        "-OBR4BYPLnTvY219laNz": {
+          "address": "222",
+          "name": "huy",
+          "orderDateTime": "11-11-2024 23:35:44",
+          "orderId": "-OBR4BYPLnTvY219laNz",
+          "orderItems": [
+            {
+              "cartItemId": "2",
+              "cartItemImageUrl": "/productimage/trathachxoai.png",
+              "cartItemName": "Trà Thạch Đào",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OBR2sPl0r0cRDHx1ZjQ"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "1111",
+          "status": "Đang xử lý",
+          "totalPaymentOrder": "45.000 đ"
+        }
+      },
+      "userId": "GKqA23ACFgNBnOnjllqfjBOOB2V2"
+    },
+    "PApHISYykPNCyr9CObymrjlVyXl2": {
+      "cart": {
+        "-OIo0Mhikg0C5bUE_osN": {
+          "cartItemId": "5",
+          "cartItemImageUrl": "/productimage/capuchino.png",
+          "cartItemName": "Capucino",
+          "cartItemQuantity": 1,
+          "cartItemSize": "S",
+          "cartItemTotalPrice": 99000,
+          "id": "-OIo0Mhikg0C5bUE_osN"
+        }
+      },
+      "email": "abc@gmail.com",
+      "orders": {
+        "-OF09FqVED7EnZTZz_5d": {
+          "address": "alooo",
+          "name": "alo",
+          "orderDateTime": "26-12-2024 11:10:55",
+          "orderId": "-OF09FqVED7EnZTZz_5d",
+          "orderItems": [
+            {
+              "cartItemId": "5",
+              "cartItemImageUrl": "/productimage/capuchino.png",
+              "cartItemName": "Capucino",
+              "cartItemQuantity": 5,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 565000,
+              "id": "-OF09166bIZFC8bYdP3t"
+            },
+            {
+              "cartItemId": "5",
+              "cartItemImageUrl": "/productimage/capuchino.png",
+              "cartItemName": "Capucino",
+              "cartItemQuantity": 48,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 5088000,
+              "id": "-OF09ABW4aIXI5MD0S6k"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "369258147",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "5.653.000 đ"
+        },
+        "-OF2fHDJsCO7Tv-HCAzo": {
+          "address": "jsjdjjd",
+          "name": "jsjdj",
+          "orderDateTime": "26-12-2024 22:54:25",
+          "orderId": "-OF2fHDJsCO7Tv-HCAzo",
+          "orderItems": [
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 50,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 2950000,
+              "id": "-OF2fAkc4chV8SnCqLHW"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "0946469484788",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "2.950.000 đ"
+        },
+        "-OGh-_QpnogAESTHqABF": {
+          "address": "bbbb",
+          "name": "hjjj",
+          "orderDateTime": "16-01-2025 09:47:37",
+          "orderId": "-OGh-_QpnogAESTHqABF",
+          "orderItems": [
+            {
+              "cartItemId": "5",
+              "cartItemImageUrl": "/productimage/capuchino.png",
+              "cartItemName": "Capucino",
+              "cartItemQuantity": 36,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 4068000,
+              "id": "-OF5lGyjf5vL9z2oRGGs"
+            },
+            {
+              "cartItemId": "10",
+              "cartItemImageUrl": "/productimage/cheesecake.png",
+              "cartItemName": "Cheese Cakes",
+              "cartItemQuantity": 3,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 450000,
+              "id": "-OGh-UrKDO7VqB2S0X9m"
+            }
+          ],
+          "paymentMethod": "Thanh toán qua ví điện tử",
+          "phone": "999999",
+          "status": "Đang xử lý",
+          "totalPaymentOrder": "4.518.000 đ"
+        }
+      },
+      "userId": "PApHISYykPNCyr9CObymrjlVyXl2"
+    },
+    "TJKzh9z4ieMWeyyJQPC5JQT2aIl2": {
+      "email": "test1@gmail.com",
+      "orders": {
+        "-OIK3mljCIZHs7X_VNPQ": {
+          "address": "qweqwe",
+          "name": "weqw",
+          "orderDateTime": "05-02-2025 07:46:29",
+          "orderId": "-OIK3mljCIZHs7X_VNPQ",
+          "orderItems": [
+            {
+              "cartItemId": "5",
+              "cartItemImageUrl": "/productimage/capuchino.png",
+              "cartItemName": "Capucino",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 99000,
+              "id": "-OIK3ajjETTa9fyHQMVJ"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OIK3bLiKxmyVVDsFKNl"
+            },
+            {
+              "cartItemId": "2",
+              "cartItemImageUrl": "/productimage/trathachxoai.png",
+              "cartItemName": "Trà Thạch Đào",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OIK3c2T56Y_35htB0oD"
+            },
+            {
+              "cartItemId": "3",
+              "cartItemImageUrl": "/productimage/travai.png",
+              "cartItemName": "Trà Thạch Vải",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OIK3cvDkvp2tMKBGQst"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "21312312",
+          "status": "Đang xử lý",
+          "totalPaymentOrder": "234.000 đ"
+        },
+        "-OJJUwAuUjoa0t800tyV": {
+          "address": "đâsd",
+          "name": "´dasdsa´dasdasda",
+          "orderDateTime": "17-02-2025 15:21:12",
+          "orderId": "-OJJUwAuUjoa0t800tyV",
+          "orderItems": [
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 6,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 270000,
+              "id": "-OIsaAsgfw9TVA0TvzeH"
+            },
+            {
+              "cartItemId": "5",
+              "cartItemImageUrl": "/productimage/capuchino.png",
+              "cartItemName": "Capucino",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 99000,
+              "id": "-OIsaWU_FK2amIsK75qH"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OItLxZAUMElfLJTVEh-"
+            }
+          ],
+          "paymentMethod": "Thanh toán qua ví điện tử",
+          "phone": "3423213123",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "414.000 đ"
+        },
+        "-OJJYT9t6qmcA2C9C4f9": {
+          "address": "qweqweqwe",
+          "name": "eweqweqwe23212",
+          "orderDateTime": "17-02-2025 15:36:37",
+          "orderId": "-OJJYT9t6qmcA2C9C4f9",
+          "orderItems": [
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 3,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 156000,
+              "id": "-OJJYOJqBJl2d-nROvy6"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "324234234",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "156.000 đ"
+        }
+      },
+      "userId": "TJKzh9z4ieMWeyyJQPC5JQT2aIl2"
+    },
+    "UnEeyWFzKWZO7QUdMiZAN38w7nT2": {
+      "email": "123@gmail.com",
+      "orders": {
+        "-ODtkzYo6gwIXXOdbGsO": {
+          "address": "6uhh",
+          "name": "bhhuuh",
+          "orderDateTime": "12-12-2024 14:27:28",
+          "orderId": "-ODtkzYo6gwIXXOdbGsO",
+          "orderItems": [
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-ODtkkn4Za7C-JeTJivj"
+            },
+            {
+              "cartItemId": "6",
+              "cartItemImageUrl": "/productimage/chanhdavien.png",
+              "cartItemName": "Chanh Đá Viên",
+              "cartItemQuantity": 3,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 165000,
+              "id": "-ODtksiWdiLo2yJdbYx1"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "2556",
+          "status": "Đang xử lý",
+          "totalPaymentOrder": "210.000 đ"
+        }
+      },
+      "userId": "UnEeyWFzKWZO7QUdMiZAN38w7nT2"
+    },
+    "iFT5jGmdctcBmktg68PvuuKdmGp1": {
+      "email": "test@gmail.com",
+      "orders": {
+        "-OBOBA7WekSappEigbNs": {
+          "address": "hn",
+          "name": "huy",
+          "orderDateTime": "11-11-2024 03:07:22",
+          "orderId": "-OBOBA7WekSappEigbNs",
+          "orderItems": [
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OBOAfrpXKRfqMlmKvt2"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "345345",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "45.000 đ"
+        },
+        "-OBODDX8mEvZK-sDx1Us": {
+          "address": "hn",
+          "name": "test123",
+          "orderDateTime": "11-11-2024 03:16:20",
+          "orderId": "-OBODDX8mEvZK-sDx1Us",
+          "orderItems": [
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OBOD8y4tGwXQW4pU0aJ"
+            },
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 1,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 52000,
+              "id": "-OBOD9EFETCPGfAEvxny"
+            },
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 1,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 59000,
+              "id": "-OBOD9bUa3ARty80zI0b"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OBODAMe1ce5hKBqFKH0"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 52000,
+              "id": "-OBODAbmYlzMBZhkSss7"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 59000,
+              "id": "-OBODAtoBTK_DmH4RkFb"
+            }
+          ],
+          "paymentMethod": "Thanh toán qua ví điện tử",
+          "phone": "23123123",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "312.000 đ"
+        },
+        "-OBVdOSyRq8OmYnAVkxC": {
+          "address": "1772",
+          "name": "huuu",
+          "orderDateTime": "12-11-2024 20:52:22",
+          "orderId": "-OBVdOSyRq8OmYnAVkxC",
+          "orderItems": [
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OBQzxkGIdUwesZnf6xj"
+            },
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 1,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 52000,
+              "id": "-OBQzyF2FzxosCGXoKfS"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 2,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 90000,
+              "id": "-OBVdH_82JG7QRh9vB_5"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "878788787",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "187.000 đ"
+        },
+        "-OBZg5KQxkmAQ3gQUO5E": {
+          "address": "´dasd2342",
+          "name": "kjdsdasj",
+          "orderDateTime": "13-11-2024 08:42:40",
+          "orderId": "-OBZg5KQxkmAQ3gQUO5E",
+          "orderItems": [
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 50,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 2950000,
+              "id": "-OBZfvk2Ed2YckqSE2Fg"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "234234234",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "2.950.000 đ"
+        },
+        "-OBo-zENO4uBo7G6Obd6": {
+          "address": "sadasd2312321´dasdasd",
+          "name": "´dasd´dasda",
+          "orderDateTime": "16-11-2024 08:08:14",
+          "orderId": "-OBo-zENO4uBo7G6Obd6",
+          "orderItems": [
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OBo-qudY1fKfgPWwyf5"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 52000,
+              "id": "-OBo-uQrbKnpx8lN-wyF"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "1231234234",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "97.000 đ"
+        },
+        "-OBuUJnb2q7feDgnquOl": {
+          "address": "qưeqwe",
+          "name": "´dwe",
+          "orderDateTime": "17-11-2024 14:18:28",
+          "orderId": "-OBuUJnb2q7feDgnquOl",
+          "orderItems": [
+            {
+              "cartItemId": "5",
+              "cartItemImageUrl": "/productimage/capuchino.png",
+              "cartItemName": "Capucino",
+              "cartItemQuantity": 3,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 339000,
+              "id": "-OBuUGyJ9U3yS3gTOezp"
+            }
+          ],
+          "paymentMethod": "Thanh toán qua ví điện tử",
+          "phone": "0101231231",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "339.000 đ"
+        },
+        "-OBuVEB8wH5gc_Q6mA1N": {
+          "address": "haf noihgg",
+          "name": "huy",
+          "orderDateTime": "17-11-2024 21:22:29",
+          "orderId": "-OBuVEB8wH5gc_Q6mA1N",
+          "orderItems": [
+            {
+              "cartItemId": "0",
+              "cartItemImageUrl": "/productimage/matchadaudo.png",
+              "cartItemName": "Trà Xanh Đậu Đỏ",
+              "cartItemQuantity": 7,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 364000,
+              "id": "-OBuV6z3E0xubraVqJTq"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 50,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 2600000,
+              "id": "-OBuV971eln9iXknlHjb"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "123456",
+          "status": "Đã Hủy",
+          "totalPaymentOrder": "2.964.000 đ"
+        }
+      },
+      "userId": "iFT5jGmdctcBmktg68PvuuKdmGp1"
+    },
+    "wW9Viro7vubdMUYgfIvl4kpbu6u2": {
+      "cart": {
+        "-OBR-EkPGBwvec-usFVg": {
+          "cartItemId": "2",
+          "cartItemImageUrl": "/productimage/trathachxoai.png",
+          "cartItemName": "Trà Thạch Đào",
+          "cartItemQuantity": 1,
+          "cartItemSize": "S",
+          "cartItemTotalPrice": 45000,
+          "id": "-OBR-EkPGBwvec-usFVg"
+        },
+        "-OBR-EzCQkijh2F6kebp": {
+          "cartItemId": "2",
+          "cartItemImageUrl": "/productimage/trathachxoai.png",
+          "cartItemName": "Trà Thạch Đào",
+          "cartItemQuantity": 1,
+          "cartItemSize": "M",
+          "cartItemTotalPrice": 52000,
+          "id": "-OBR-EzCQkijh2F6kebp"
+        },
+        "-OBR-FE4mpM1aBPuNYs-": {
+          "cartItemId": "2",
+          "cartItemImageUrl": "/productimage/trathachxoai.png",
+          "cartItemName": "Trà Thạch Đào",
+          "cartItemQuantity": 1,
+          "cartItemSize": "L",
+          "cartItemTotalPrice": 59000,
+          "id": "-OBR-FE4mpM1aBPuNYs-"
+        }
+      },
+      "email": "1@gmail.com",
+      "orders": {
+        "-OBOReaonqOqgnqRn1we": {
+          "address": "dfgdfgd",
+          "name": "gsfdgdf",
+          "orderDateTime": "11-11-2024 04:19:25",
+          "orderId": "-OBOReaonqOqgnqRn1we",
+          "orderItems": [
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OBORcOWqQIeiFA2KBGJ"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "21312312",
+          "status": "Đang xử lý",
+          "totalPaymentOrder": "45.000 đ"
+        },
+        "-OBORi_JYR_8YRSuFdvu": {
+          "address": "432423",
+          "name": "332432",
+          "orderDateTime": "11-11-2024 04:19:41",
+          "orderId": "-OBORi_JYR_8YRSuFdvu",
+          "orderItems": [
+            {
+              "cartItemId": "5",
+              "cartItemImageUrl": "/productimage/capuchino.png",
+              "cartItemName": "Capucino",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 99000,
+              "id": "-OBORg6G49eMvF7M4E5a"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "423423",
+          "status": "Đang xử lý",
+          "totalPaymentOrder": "99.000 đ"
+        },
+        "-OBR-DOBpVWTrAQJoNqd": {
+          "address": "1111",
+          "name": "1111",
+          "orderDateTime": "11-11-2024 16:14:01",
+          "orderId": "-OBR-DOBpVWTrAQJoNqd",
+          "orderItems": [
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "S",
+              "cartItemTotalPrice": 45000,
+              "id": "-OBR-9szD_iHNkK5hCDk"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "M",
+              "cartItemTotalPrice": 52000,
+              "id": "-OBR-A9M1tVL4iGlbaV7"
+            },
+            {
+              "cartItemId": "1",
+              "cartItemImageUrl": "/productimage/senvangcunang.png",
+              "cartItemName": "Trà Sen Vàng (Củ Năng)",
+              "cartItemQuantity": 1,
+              "cartItemSize": "L",
+              "cartItemTotalPrice": 59000,
+              "id": "-OBR-AOSzB1niVOxovzV"
+            }
+          ],
+          "paymentMethod": "Thanh toán khi nhận hàng",
+          "phone": "11111",
+          "status": "Đang xử lý",
+          "totalPaymentOrder": "156.000 đ"
+        }
+      },
+      "userId": "wW9Viro7vubdMUYgfIvl4kpbu6u2"
+    }
+  },
+  "banner": [
+    {
+      "id_banner": 1,
+      "url_banner_image": "https://www.highlandscoffee.com.vn/vnt_upload/news/08_2023/HCO-7700-MID-AUTUMN-SOCIAL-WEB-BANNER-1440X460.jpg",
+      "ad_link": "https://www.highlandscoffee.com.vn/vn/phindi-hat-de-cuoi-he-mo-nu-cuoi-.html"
+    },
+    {
+      "id_banner": 2,
+      "url_banner_image": "https://www.highlandscoffee.com.vn/vnt_upload/news/10_2023/HLC_x_Vani_Banner_website.png",
+      "ad_link": "https://www.highlandscoffee.com.vn/en/chuong-trinh-thanh-vien-highlands-coffee-da-chinh-thuc-co-mat.html"
+    },
+    {
+      "id_banner": 3,
+      "url_banner_image": "https://www.highlandscoffee.com.vn/vnt_upload/news/08_2023/HCO-7700-MID-AUTUMN-SOCIAL-WEB-BANNER-1440X460.jpg",
+      "ad_link": "https://www.highlandscoffee.com.vn/vn/phindi-hat-de-cuoi-he-mo-nu-cuoi-.html"
+    }
+  ]
+}
