@@ -127,14 +127,14 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
                     <View style={{width:'70%'}}>
                         <Text style={{fontSize:20}}>{productObject.product_name}</Text>
                     </View>
-                    <View style={{width:'30%',alignItems:'center'}}>
-                        <Text style={{fontSize:20,color:COLOR_RED,fontWeight:'800'}}>{formatNumber(productObject.product_price)}đ</Text>
+                    <View style={{width:'30%',alignItems:'center',justifyContent:'center',borderRadius:30,height:40,backgroundColor:'#ffffff'}}>
+                        <Text style={{fontSize:20,color:COLOR_RED,fontWeight:'500'}}>{formatNumber(productObject.product_price)}đ</Text>
                     </View>
                 </View>
 
                 {/* Chon size */}
-                <View style={{width:width*0.9,height:80,marginTop:20}}>
-                    <Text style={{marginLeft:5,fontSize:15,fontWeight:'800'}}>Size</Text>
+                <View style={{width:width*0.9,height:80,marginTop:10}}>
+                    <Text style={{marginLeft:5,fontSize:15}}>Size:</Text>
                     <View style={{flexDirection:'row',justifyContent:'center'}}>
 
                         <TouchableOpacity onPress={()=>{handlePressSize('S')}}>
@@ -173,8 +173,8 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
                 </View>
 
                 {/* So luong */}
-                <View style={{width:width*0.9,height:80,marginTop:20}}>
-                    <Text style={{marginLeft:5,fontSize:15,fontWeight:'800'}}>Số lượng</Text>
+                <View style={{width:width*0.9,height:80,marginTop:10}}>
+                    <Text style={{marginLeft:5,fontSize:15,}}>Số lượng:</Text>
                     <View style={{flexDirection:'row',justifyContent:'center'}}>
 
                         <TouchableOpacity onPress={increaseQuantity}>
@@ -196,9 +196,14 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
                         </TouchableOpacity>
                     </View>
                 </View>
+
+                <View style={{width:width*0.9,height:30,marginTop:10,flexDirection:'row'}}>
+                    <Text style={{fontSize:20,fontWeight:'500'}}>Tổng tiền:  </Text>
+                    <Text style={{fontSize:20,fontWeight:'500'}}>50000đ</Text>
+                </View>
                 
                 <TouchableOpacity>
-                    <View style={{marginTop:30,}}>
+                    <View style={{marginTop:10,}}>
                         <ButtonItem textButton={'Thêm vào giỏ hàng  '} iconButton={require('../assets/addtocart.png')} tintColor={'white'}/>
                     </View>
                 </TouchableOpacity>

@@ -7,7 +7,7 @@ export type RootStackParamList = {
     MyTabsScreen:undefined;
     DetailProductScreen:{ product_id: string };
     RegisterScreen:undefined;
-    LoginScreen:undefined
+    LoginScreen:undefined;
 }
 
 export type Category = {
@@ -30,5 +30,36 @@ export type Product = {
     product_price: number,
     product_salescount: number
 }
+
+export type User = {
+     userId: String,  // ID người dùng, sẽ lấy từ Firebase Authentication
+     email: String,  // Địa chỉ email của người dùng
+     cart: CartItem[],  // Giỏ hàng của người dùng
+     orders: Order  // Danh sách đơn hàng của người dùng
+}
+    
+export type CartItem = {
+    id:String,
+    cartItemId: String,
+    cartItemName: String,
+    cartItemQuantity: number,
+    cartItemSize: String,
+    cartItemTotalPrice: number,
+    cartItemImageUrl:String
+}
+
+export type Order = {
+    orderId: String,
+    name: String,
+    address: String,
+    phone: String,
+    paymentMethod: String,
+    orderItems:CartItem[],
+    orderDateTime: String,
+    status: String,
+    totalPaymentOrder:String
+}
+
+
 
 export const COLOR_RED = "#f25050"

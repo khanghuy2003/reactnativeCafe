@@ -27,8 +27,8 @@ const fetchCategories = async () => {
         reference.once("value").then(async (snapshot) => {
             const data = snapshot.val();
             const categoryArray: Category[] = Object.values(data);
-
-            // chuyển path fireStorage thành link
+            
+            // Lặp qua từng phần tử để lấy URL
             const updatedCategories = await Promise.all(
                 categoryArray.map(async (item) => {
                     const imageUrl = await getImageURL(item.imageURL_category);

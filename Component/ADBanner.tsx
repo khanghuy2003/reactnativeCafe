@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Image, FlatList, Dimensions, useWindowDimensions, TouchableOpacity, Linking } from 'react-native';
-import database from "@react-native-firebase/database";
-import storage from '@react-native-firebase/storage';
+import { getAuth } from '@react-native-firebase/auth';
+import { getDatabase, ref, get } from '@react-native-firebase/database';
+import { getStorage, ref as storageRef, getDownloadURL } from '@react-native-firebase/storage';
 import { Banner } from '../type/type';
 
 
@@ -11,19 +12,27 @@ const ADBanner = () => {
     const flatListRef = useRef<FlatList>(null);
     const [banner,setBanner] = useState<Banner[]> ([])
 
-    useEffect(() => {
-        const fetchBanner = async () => {
-          const reference = database().ref('/banner');
-          const snapshot = await reference.once('value');
-          const data = snapshot.val();
-          if (data) {
-            const bannerArray: Banner[] = Object.values(data);
-            setBanner(bannerArray);
+    const fetchBanner = async () => {
+      const db = getDatabase();
+      const dbRef = ref(db, '/banner');
+  
+      try {
+          const snapshot = await get(dbRef);
+          if (snapshot.exists()) {
+              const data = snapshot.val();
+              const bannerArray: Banner[] = Object.values(data);
+              setBanner(bannerArray);
+          } else {
+              console.log('Không có dữ liệu banner');
           }
-        };
-    
+      } catch (error) {
+          console.error('Lỗi khi lấy dữ liệu banner:', error);
+      }
+  };
+  
+    useEffect(() => {
         fetchBanner();
-      }, []);
+    }, []);
 
     useEffect(() => {
           let nextIndex = index;

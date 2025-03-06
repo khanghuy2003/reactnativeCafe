@@ -6,11 +6,30 @@ import SocialLoginButton from "../Component/SocialLoginButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../type/type";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getAuth, signInWithEmailAndPassword } from '@react-native-firebase/auth';
+import { getDatabase } from '@react-native-firebase/database';
+import { getStorage } from '@react-native-firebase/storage';
+import auth from '@react-native-firebase/auth';
+
 
 type LoginScreenProps= NativeStackScreenProps<RootStackParamList,"LoginScreen">
 function LoginScreen({navigation}:LoginScreenProps) {
 
     const [hidePassword,setHidePassword] = useState(true)
+    const [email,setEmail] = useState<string>('')
+    const [password,setPassWord] = useState<string>('')
+    const [error,setError] = useState('')
+
+    const handleLogin = async () => {
+        try {
+          await auth().signInWithEmailAndPassword(email, password);
+          navigation.navigate('MyTabsScreen');
+        } catch (err: any) {
+          setError('Email hoặc password không hợp lệ!');
+        }
+      };
+      
+      
 
     return(
     <SafeAreaView style={{flex:1}}>
@@ -32,18 +51,25 @@ function LoginScreen({navigation}:LoginScreenProps) {
                     <TextInputItem 
                         image1={require('../assets/email.png')} 
                         image2={null} 
-                        placeHolderHint={"Email"}/>
+                        placeHolderHint={"Email"}
+                        onChangeText={setEmail}/>
                     <TextInputItem 
                         image1={require('../assets/password.png')} 
                         image2={require('../assets/hidepassword.png')} 
                         placeHolderHint={"Password"} 
-                        secureTextEntry={hidePassword}/>
+                        secureTextEntry={hidePassword}
+                        onChangeText={setPassWord}/>
+                        
                         <TouchableOpacity>
                             <View style={{alignItems:"center",marginTop:3}}>
                                 <Text style={styles.textStyles3}>Forgot your password?</Text>
                             </View>
                         </TouchableOpacity>
                 </View>
+                <View style={{width:'auto',alignItems:'center',marginTop:10}}>
+                    {error ? <Text style={styles.error}>{error}</Text> : null}
+                </View>
+                
             </View>
 
 
@@ -52,7 +78,7 @@ function LoginScreen({navigation}:LoginScreenProps) {
             <View>
                 {/* Button */}
                 <View style={{marginBottom:30}}>
-                    <TouchableOpacity onPress={ () => navigation.navigate('MyTabsScreen') }>
+                    <TouchableOpacity onPress={handleLogin}>
                         <ButtonItem 
                             textButton={"Login"} 
                             iconButton={require('../assets/iconlogin.png')}/>
@@ -149,6 +175,10 @@ function LoginScreen({navigation}:LoginScreenProps) {
             flexDirection:"row",
             width:130,
             justifyContent:"space-between",
-        }
+        },
+        error: {
+            color: 'red',
+            marginBottom: 10,
+          },
     })
 export default LoginScreen

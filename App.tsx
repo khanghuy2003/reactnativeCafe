@@ -1,3 +1,4 @@
+// import './firebase/firebaseConfig'; // Import để khởi tạo Firebase
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
@@ -12,6 +13,12 @@ import DetailProductScreen from './Screen/DetailProductScreen';
 import { COLOR_RED, RootStackParamList } from './type/type';
 import LoginScreen from './Screen/LoginScreen';
 import RegisterScreen from './Screen/RegisterScreen';
+import '@react-native-firebase/auth';
+import  firebase  from '@react-native-firebase/app';
+import '@react-native-firebase/app';
+import '@react-native-firebase/auth';
+import { AuthProvider } from './firebase/AuthContext';
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -95,15 +102,17 @@ const MyTabsScreen = () => {
 
 const App = () => {
   return(
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name = "SplashScreen" component = {SplashScreen}/>
-        <Stack.Screen name = "MyTabsScreen" component = {MyTabsScreen}/>
-        <Stack.Screen name = "DetailProductScreen" component = {DetailProductScreen}/>
-        <Stack.Screen name = "LoginScreen" component={LoginScreen}/>
-        <Stack.Screen name = "RegisterScreen" component={RegisterScreen}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown:false}}>
+          <Stack.Screen name = "SplashScreen" component = {SplashScreen}/>
+          <Stack.Screen name = "MyTabsScreen" component = {MyTabsScreen}/>
+          <Stack.Screen name = "DetailProductScreen" component = {DetailProductScreen}/>
+          <Stack.Screen name = "LoginScreen" component={LoginScreen}/>
+          <Stack.Screen name = "RegisterScreen" component={RegisterScreen}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   )
 }
 
