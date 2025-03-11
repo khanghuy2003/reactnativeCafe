@@ -22,7 +22,7 @@ const AccountScreen = ({navigation}:AccountScreenProps) => {
         }
     }, [user]);
 
-    const handleLogout =async () =>{
+    const handleLogout = async () =>{
         await logout()
         navigation.navigate('HomeScreen')
     }

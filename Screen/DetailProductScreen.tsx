@@ -13,7 +13,7 @@ type DetailProductScreen = NativeStackScreenProps<RootStackParamList,"DetailProd
 const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
     const {product_id} = route.params
 
-    const [productObject,setProductObject] = useState<Product>({
+    const [productObject,setProductObject] = useState({
         product_categoryid: 0,
         product_id: product_id,
         product_imageurl: '',
@@ -22,10 +22,6 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
         product_salescount: 0
     })
 
-
-    // const [productObject,setProductObject] = useState({})
-    
-
     const fetchDataProduct = () => {
         const reference = database().ref(`/products/${product_id}`)
         reference.once('value')
@@ -33,16 +29,22 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
             if(snapshot.exists()){
                 const productData = snapshot.val()
                 setProductObject(productData)
+                setPriceProduct(productData.product_price)
             }
         })
-        .catch(error => {console.log('loi lay du lieu',error)})
+        .catch(error => {console.log('Lỗi lấy dữ liệu!',error)})
     }
 
     const width = useWindowDimensions().width
     const [sizePressed_S,setSizePressed_S] = useState(true)
     const [sizePressed_M,setSizePressed_M] = useState(false)
     const [sizePressed_L,setSizePressed_L] = useState(false)
+    
     const [quantity,setQuantity] = useState<number> (1)
+    const [size,setSize] = useState<string>('S')
+    const [priceProduct,setPriceProduct] = useState<number>(0)
+    const [totalAmount,setTotalAmount] = useState<number>(priceProduct)
+
     const [imageURL, setImageURL] = useState<string | null>(null);
 
     const handleChangeInputQuantity = (text: string) => {
@@ -59,6 +61,8 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
         setSizePressed_S(size === 'S');
         setSizePressed_M(size === 'M');
         setSizePressed_L(size === 'L');
+        setSize(size)
+        return size
       };
 
       const getImageURL = async (path: string) => {
@@ -72,13 +76,13 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
     };
 
     const formatNumber = (num: number) => {
-        return num.toLocaleString("vi-VN"); // "vi-VN" là định dạng Việt Nam
+        return num.toLocaleString("vi-VN"); 
       };
     
 
-    const increaseQuantity = () => setQuantity(quantity + 1)
+    const increaseQuantity = () => setQuantity ( quantity + 1 )
 
-    const decreaseQuantity = () => {quantity>1 ? setQuantity(quantity - 1) : quantity}
+    const decreaseQuantity = () => {quantity > 1 ? setQuantity ( quantity - 1 ) : quantity}
 
     useEffect(()=>{
         const fetchImage = async () => {
@@ -92,6 +96,30 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
         fetchImage();
 
     },[productObject.product_imageurl])
+
+    useEffect(()=>{
+        setTotalAmount(priceProduct*quantity)
+    })
+
+    useEffect(()=>{
+        if(sizePressed_S){
+            setPriceProduct(productObject.product_price)
+        }else if(sizePressed_M){
+            setPriceProduct(productObject.product_price+7000)
+        }else{
+            setPriceProduct(productObject.product_price+14000)
+        }
+    },[handlePressSize])
+
+
+    // 
+    const handleAddToCart = () =>{
+        console.log('san pham: ',productObject.product_name)
+        console.log('gia san pham',priceProduct)
+        console.log('size da chon: ',size)
+        console.log('tong tien: ',totalAmount)
+        console.log('so luong',quantity)
+    }
 
     return(
         <SafeAreaView style={{flex:1}}>
@@ -128,7 +156,7 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
                         <Text style={{fontSize:20}}>{productObject.product_name}</Text>
                     </View>
                     <View style={{width:'30%',alignItems:'center',justifyContent:'center',borderRadius:30,height:40,backgroundColor:'#ffffff'}}>
-                        <Text style={{fontSize:20,color:COLOR_RED,fontWeight:'500'}}>{formatNumber(productObject.product_price)}đ</Text>
+                        <Text style={{fontSize:20,color:COLOR_RED,fontWeight:'500'}}>{formatNumber(priceProduct)}đ</Text>
                     </View>
                 </View>
 
@@ -199,10 +227,10 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
 
                 <View style={{width:width*0.9,height:30,marginTop:10,flexDirection:'row'}}>
                     <Text style={{fontSize:20,fontWeight:'500'}}>Tổng tiền:  </Text>
-                    <Text style={{fontSize:20,fontWeight:'500'}}>50000đ</Text>
+                    <Text style={{fontSize:20,fontWeight:'500'}}>{formatNumber(totalAmount)}đ</Text>
                 </View>
                 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleAddToCart}>
                     <View style={{marginTop:10,}}>
                         <ButtonItem textButton={'Thêm vào giỏ hàng  '} iconButton={require('../assets/addtocart.png')} tintColor={'white'}/>
                     </View>

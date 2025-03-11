@@ -35,6 +35,8 @@ const ADBanner = () => {
     }, []);
 
     useEffect(() => {
+          if (!banner || banner.length === 0) return;
+          
           let nextIndex = index;
           const interval = setInterval(() => {
             nextIndex = (nextIndex + 1) % banner.length;
