@@ -76,7 +76,7 @@ const CartScreen= () =>{
     }
 
     const handleDeleteItem = (id: string ) =>{
-        console.log('delete item id = ',id)
+        console.log('delete CartItem id = ',id)
     }
 
     return(

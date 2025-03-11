@@ -8,6 +8,7 @@ export type RootStackParamList = {
     DetailProductScreen:{ product_id: string };
     RegisterScreen:undefined;
     LoginScreen:undefined;
+    DetailOrderScreen:{orderItem:Order};
 }
 
 export type Category = {

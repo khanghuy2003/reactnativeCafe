@@ -1,0 +1,188 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack"
+import { Button, FlatList, StyleProp, StyleSheet, Text, TextStyle, Touchable, TouchableOpacity, View } from "react-native"
+import { CartItem, COLOR_RED, RootStackParamList } from "../type/type"
+import { SafeAreaView } from "react-native-safe-area-context"
+
+
+type DetailOrderScreenProps = NativeStackScreenProps<RootStackParamList,'DetailOrderScreen'>
+const DetailOrderScreen = ({navigation,route}:DetailOrderScreenProps) =>{
+    const {
+        orderId,
+        name,
+        address,
+        phone,
+        paymentMethod,
+        orderItems,
+        orderDateTime,
+        status,
+        totalPaymentOrder
+    } = route.params.orderItem
+
+    const handleColorStatus = (status: string): StyleProp<TextStyle> => {
+        switch (status.toLowerCase()) {
+            case "đã hủy": return { color: "red" };
+            case "đang xử lý": return { color: "blue" };
+            default: return { color: "black" };
+        }
+    };
+
+    return (
+        <SafeAreaView style={{flex:1}}>
+            <View style={styles.container}>
+                <Text style={styles.NameOrder}>Thông tin đơn hàng</Text>
+                <Text style={styles.text1}>Danh sách order:</Text>
+                <View style={{marginHorizontal:5,borderWidth:1}}>
+                    {/* Header */}
+                    <View style={[styles.row, styles.header]}>
+                        <Text style={[styles.cellSTT, styles.headerText]}>STT</Text>
+                        <Text style={[styles.cellTenSP, styles.headerText]}>Tên SP</Text>
+                        <Text style={[styles.cellSize, styles.headerText]}>Size</Text>
+                        <Text style={[styles.cell, styles.headerText]}>Số lượng</Text>
+                        <Text style={[styles.cell, styles.headerText]}>Giá</Text>
+                    </View>
+                    {/* Data */}
+                    <FlatList
+                        data={orderItems}
+                        keyExtractor={orderItems => orderItems.cartItemId.toString()}
+                        renderItem={({ item, index }) => (
+                        <View style={styles.row}>
+                            <Text style={styles.cellSTT}>{index}</Text>
+                            <Text style={styles.cellTenSP}>{item.cartItemName}</Text>
+                            <Text style={styles.cellSize}>{item.cartItemSize}</Text>
+                            <Text style={styles.cell}>{item.cartItemQuantity}</Text>
+                            <Text style={styles.cell}>{item.cartItemTotalPrice.toLocaleString('vi-VN')} đ</Text>
+                        </View>
+                        )}
+                    />
+                    <Text style={{fontSize:15,marginVertical:3,marginLeft:4,textAlign:'right',fontWeight:500}}>Tổng tiền: {totalPaymentOrder}</Text>
+                </View>
+
+                {/* thong tin nguoi dung dat hang */}
+                <View style={{marginLeft:10}}>
+                    <Text style={styles.text1}>Thông tin người nhận:</Text>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.text3}>ID Đơn hàng: </Text>
+                        <Text style={styles.text4}>{orderId}</Text>
+                    </View>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.text3}>Thời gian đặt hàng: </Text>
+                        <Text style={styles.text4}>{orderDateTime}</Text>
+                    </View>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.text3}>Tên người nhận: </Text>
+                        <Text style={styles.text4}>{name}</Text>
+                    </View>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.text3}>Địa chỉ: </Text>
+                        <Text style={styles.text4}>{address}</Text>
+                    </View>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.text3}>Số điện thoại: </Text>
+                        <Text style={styles.text4}>{phone}</Text>
+                    </View>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.text3}>PTTT: </Text>
+                        <Text style={styles.text4}>{paymentMethod}</Text>
+                    </View>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={styles.text3}>Trạng thái đơn hàng: </Text>
+                        <Text style={[
+                            handleColorStatus(status.toString()),
+                            styles.text4
+                            ]}>{status}</Text>
+                    </View>
+                </View>
+                {/* Các button */}
+                <View style={{flexDirection:'row',marginTop:20,justifyContent:'space-evenly'}}>
+                    <TouchableOpacity>
+                        <View style={styles.button}>
+                            <Text style={styles.text5}>abc</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <View style={styles.button}>
+                            <Text style={styles.text5}>abc</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>navigation.goBack()}>
+                        <View style={styles.button}>
+                            <Text style={styles.text5}>Back</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        </SafeAreaView>
+    )
+}
+
+const styles = StyleSheet.create({
+    NameOrder:{
+        fontSize:30,
+        alignSelf:'center'
+    },
+    container:{
+        flex:1,
+    },
+    text1:{
+        fontWeight:800,
+        fontSize:15,
+        margin:8
+    },
+    cell: {
+      flex: 0.2,
+      textAlign: 'center',
+      borderWidth:0,
+      marginVertical:10
+    },
+    row: {
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      borderColor: '#ccc',
+      paddingVertical: 0,
+    },
+    headerText: {
+      fontWeight: 'bold',
+    },
+    header: {
+      backgroundColor: '#ddd',
+    },
+    cellSize:{
+      flex: 0.1,
+      textAlign: 'center',
+      borderWidth:0,
+      marginVertical:10
+    },
+    cellTenSP:{
+      flex: 0.4,
+      textAlign: 'center',
+      borderWidth:0,
+      marginVertical:10
+    },
+    cellSTT:{
+      flex: 0.1,
+      textAlign: 'center',
+      borderWidth:0,
+      marginVertical:10
+    },
+    text3:{
+        fontSize:18,
+        fontWeight:700
+    },
+    text4:{
+        fontSize:18
+    },
+    button:{
+        borderWidth:0,
+        width:80,
+        height:40,
+        borderRadius:10,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:COLOR_RED
+    },
+    text5:{
+        color:'#ffffff'
+    }
+})
+
+export default DetailOrderScreen
