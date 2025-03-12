@@ -1,17 +1,21 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native"
-import { COLOR_RED, Product, RootStackParamList } from "../type/type"
+import { ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import { CartItem, COLOR_RED, Product, RootStackParamList } from "../type/type"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useEffect, useState } from "react"
 import ButtonItem from "../Component/ButtonItem"
 import database from "@react-native-firebase/database";
 import storage from '@react-native-firebase/storage';
+import { useAuth } from "../firebase/AuthContext"
+import Toast from 'react-native-toast-message';
 
 type DetailProductScreen = NativeStackScreenProps<RootStackParamList,"DetailProductScreen">
 
 
 const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
     const {product_id} = route.params
+    const {user}:any = useAuth()
+    const [isProcessingATC,setIsProcessingATC] = useState(false)
 
     const [productObject,setProductObject] = useState({
         product_categoryid: 0,
@@ -77,7 +81,7 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
 
     const formatNumber = (num: number) => {
         return num.toLocaleString("vi-VN"); 
-      };
+    };
     
 
     const increaseQuantity = () => setQuantity ( quantity + 1 )
@@ -112,32 +116,86 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
     },[handlePressSize])
 
 
-    // 
+    //khi nhấn addtocart
     const handleAddToCart = () =>{
-        console.log('san pham: ',productObject.product_name)
-        console.log('gia san pham',priceProduct)
-        console.log('size da chon: ',size)
-        console.log('tong tien: ',totalAmount)
-        console.log('so luong',quantity)
+        setIsProcessingATC(true)
+        const reference = database().ref(`/users/${user.uid}/cart`)
+        reference.once(`value`).then((snapshot) => {
+            const data = snapshot.val()
+            let found:boolean = false
+
+            if(data){
+                Object.keys(data).forEach((key)=>{
+                    const item:CartItem = data[key]
+                    //kiem tra cung sp cung size
+                    if(item.cartItemId === productObject.product_id && item.cartItemSize === size){
+                        found = true;
+                        const updateCartItemQuantity = quantity + item.cartItemQuantity
+                        const updateCartItemAmount = totalAmount + item.cartItemTotalPrice
+                        //update cartItem
+                        reference.child(key)
+                        .update({
+                                cartItemQuantity:updateCartItemQuantity,
+                                cartItemTotalPrice:updateCartItemAmount
+                            })
+                        .then(()=>{
+
+                            Alert.alert('Thông báo', 'Update sp trong giỏ hàng thành công!', [
+                                {text: 'OK'},
+                              ]);
+                              setIsProcessingATC(false)
+
+                        })
+                    } 
+                })
+            }
+
+            if(!found){
+                addNewCartItem()
+            }
+
+        })
+    }
+    //nếu chưa có sản phẩm và size thì thêm một CartItem mới
+    const addNewCartItem = () => {
+        const reference = database().ref(`/users/${user.uid}/cart`).push()
+        const keyRef:any = reference.key
+        const cartItemObject:CartItem = {
+            id: keyRef,
+            cartItemId: productObject.product_id.toString(),
+            cartItemName: productObject.product_name.toString(),
+            cartItemQuantity: quantity,
+            cartItemSize: size,
+            cartItemTotalPrice: totalAmount,
+            cartItemImageUrl: productObject.product_imageurl,
+        }
+        //insert vao firebase
+        reference.set(cartItemObject)
+        .then(() => {
+            Alert.alert('Thông báo', 'Thêm mới sp vào giỏ hàng thành công!', [
+                {text: 'OK'},
+            ]);
+            setIsProcessingATC(false)
+        });
     }
 
     return(
         <SafeAreaView style={{flex:1}}>
-        <ScrollView>
-            
+
+            <ScrollView>
             <View style={{flex:1,alignItems:"center"}}>
 
                 <View style={{ position: 'relative' }}>
                     <Image 
-                        source={imageURL ? { uri: imageURL } : require('../assets/test.png')}
-                        style={{
-                            width: width * 0.9,
-                            height: width * 0.9,
-                            margin: 10,
-                            marginTop: 10,
-                            borderRadius: 15,
-                        }}
-                        resizeMode="cover"
+                    source={imageURL ? { uri: imageURL } : require('../assets/test.png')}
+                    style={{
+                        width: width * 0.9,
+                        height: width * 0.9,
+                        margin: 10,
+                        marginTop: 10,
+                        borderRadius: 15,
+                    }}
+                    resizeMode="cover"
                     />
                     
                     {/* Icon ở góc */}
@@ -229,15 +287,31 @@ const DetailProductScreen = ({navigation , route}:DetailProductScreen) => {
                     <Text style={{fontSize:20,fontWeight:'500'}}>Tổng tiền:  </Text>
                     <Text style={{fontSize:20,fontWeight:'500'}}>{formatNumber(totalAmount)}đ</Text>
                 </View>
+                {/* Button add to cart */}
+                {
+                    (user!=null)
+                    ?
+                    (
+                        (isProcessingATC)
+                        ?
+                        (<View style={styles.view2}>
+                            <ActivityIndicator size="large"/>
+                        </View>)
+                        :
+                        (<TouchableOpacity onPress={handleAddToCart}>
+                            <View style={{marginTop:10,}}>
+                                <ButtonItem textButton={'Thêm vào giỏ hàng  '} iconButton={require('../assets/addtocart.png')} tintColor={'white'}/>
+                            </View>
+                        </TouchableOpacity>)
+                    )
+                    :
+                    (<View style={styles.view1}>
+                        <Text style={styles.text1}>Bạn cần phải đăng nhập để thêm sp vào giỏ hàng!</Text>
+                    </View>)
+                }
                 
-                <TouchableOpacity onPress={handleAddToCart}>
-                    <View style={{marginTop:10,}}>
-                        <ButtonItem textButton={'Thêm vào giỏ hàng  '} iconButton={require('../assets/addtocart.png')} tintColor={'white'}/>
-                    </View>
-                </TouchableOpacity>
 
             </View>
-
         </ScrollView>
         </SafeAreaView>
     )
@@ -281,6 +355,22 @@ const styles=StyleSheet.create({
         top: 20, 
         left: 20, 
       },
+      view2:{
+        borderWidth:0,
+        width:300,
+        height:50,
+        justifyContent:'center'
+      },
+      view1:{
+        borderWidth:0,
+        marginTop:20,
+        width:'auto',
+        justifyContent:'center'
+      },
+      text1:{
+        textAlign:'center',
+        fontStyle:'italic'
+      }
 })
 
 export default DetailProductScreen

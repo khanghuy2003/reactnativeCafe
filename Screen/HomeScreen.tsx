@@ -20,30 +20,31 @@ function HomeScreen({navigation}:HomeScreenProps) {
     const [categories, setCategories] = useState<Category[]> ([]);
     const [product,setProduct] = useState<Product[]> ([]);
 
-
-// fetch Category
-const fetchCategories = async () => {
-    const reference = database().ref("/category");
-        reference.once("value").then(async (snapshot) => {
-            const data = snapshot.val();
-            const categoryArray: Category[] = Object.values(data);
-            
-            // Lặp qua từng phần tử để lấy URL
-            const updatedCategories = await Promise.all(
-                categoryArray.map(async (item) => {
-                    const imageUrl = await getImageURL(item.imageURL_category);
-                    return { ...item, imageURL_category: imageUrl };
-                })
-            );
-
-            setCategories(updatedCategories as Category[]);
-        });
-    };
+    const [isLoadingProduct,setIsLoadingProduct] = useState(true)
 
 
+    // fetch Category
+    const fetchCategories = async () => {
+        const reference = database().ref("/category");
+            reference.once("value").then(async (snapshot) => {
+                const data = snapshot.val();
+                const categoryArray: Category[] = Object.values(data);
+                
+                // Lặp qua từng phần tử để lấy URL
+                const updatedCategories = await Promise.all(
+                    categoryArray.map(async (item) => {
+                        const imageUrl = await getImageURL(item.imageURL_category);
+                        return { ...item, imageURL_category: imageUrl };
+                    })
+                );
+
+                setCategories(updatedCategories as Category[]);
+            });
+        };
 
     //fetch product
     const fetchProduct = async (id_category: number) => {
+        setIsLoadingProduct(true)
         const reference = database().ref('/products')
         reference.once('value').then(async ( snapshot ) => {
             const data = snapshot.val()
@@ -63,6 +64,7 @@ const fetchCategories = async () => {
             )
 
             setProduct(updateProduct as Product[])
+            setIsLoadingProduct(false)
         })
     }
 
@@ -74,8 +76,6 @@ const fetchCategories = async () => {
 
   }, []);
 
-
-
   const getImageURL = async (path: string) => {
     try {
       const url = await storage().ref(path).getDownloadURL();
@@ -85,8 +85,6 @@ const fetchCategories = async () => {
       return null;
     }
   };
-
-
 
   const renderItemCategory = ({ item } : any ) => (
     <TouchableOpacity onPress={()=>{
@@ -110,18 +108,9 @@ const fetchCategories = async () => {
     </TouchableOpacity>
   );
 
-
-
-// load san pham theo id_category
-  const renderItemProductByCategory = ({item,id_category}:any) => {
-
-  }
-
   const formatNumber = (num: number) => {
     return num.toLocaleString("vi-VN"); // "vi-VN" là định dạng Việt Nam
   };
-
-
 
   const renderItemProduct = ({ item } : any) => (
     <TouchableOpacity onPress={()=>{
@@ -176,12 +165,20 @@ const fetchCategories = async () => {
                 <View style={{alignSelf:"flex-start" , marginLeft:5, marginTop:5}}><Text style={{fontWeight:900}}>Danh sách sản phẩm</Text></View>
                 {/* Flatlist sản phẩm */}
                 <View style={{width:(115*3)+10}}>
-                    <FlatList
-                        data={product}
-                        renderItem={renderItemProduct}
-                        keyExtractor={ (item,index) => index.toString()}
-                        numColumns={3}
-                    />
+                    {
+                        (isLoadingProduct)
+                        ?
+                        (<View style={styles.view}>
+                            <ActivityIndicator size={'large'}/>
+                        </View>)
+                        :
+                        (<FlatList
+                            data={product}
+                            renderItem={renderItemProduct}
+                            keyExtractor={ (item,index) => index.toString()}
+                            numColumns={3}
+                        />)
+                    }
                 </View>
         </View>
 
@@ -238,6 +235,12 @@ const styles = StyleSheet.create({
         borderTopLeftRadius:15,
         borderTopRightRadius:15
 
+    },
+    view:{
+        flex:1,
+        borderWidth:0,
+        height:250,
+        justifyContent:'center'
     }
 
 })

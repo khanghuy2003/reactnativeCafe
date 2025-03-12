@@ -96,12 +96,12 @@ const DetailOrderScreen = ({navigation,route}:DetailOrderScreenProps) =>{
                 <View style={{flexDirection:'row',marginTop:20,justifyContent:'space-evenly'}}>
                     <TouchableOpacity>
                         <View style={styles.button}>
-                            <Text style={styles.text5}>abc</Text>
+                            <Text style={styles.text5}>Edit</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity>
                         <View style={styles.button}>
-                            <Text style={styles.text5}>abc</Text>
+                            <Text style={styles.text5}>Hủy order</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>navigation.goBack()}>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     },
     button:{
         borderWidth:0,
-        width:80,
+        width:90,
         height:40,
         borderRadius:10,
         justifyContent:'center',

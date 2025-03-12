@@ -1,62 +1,68 @@
 import { useEffect, useState } from "react"
-import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import { ActivityIndicator, Alert, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { CartItem, COLOR_RED, User } from "../type/type"
+import { CartItem, COLOR_RED, RootStackParamList, User } from "../type/type"
 import { useAuth } from "../firebase/AuthContext"
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
+import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
-const CartScreen= () =>{
+type CartScreenProps = NativeStackScreenProps<RootStackParamList,'CartScreen'>
+
+const CartScreen= ({navigation}:CartScreenProps) =>{
     const width = useWindowDimensions().width
     const height = useWindowDimensions().height
     const {user}:any = useAuth()
 
     const [totalAmountCart,setTotalAmountCart] = useState<number>(0)
     const [cartItem,setCartItem] = useState<ArrayLike<any>>([])
+    const [isLoadingCart,setIsLoadingCart] = useState(true)
 
+    const fetchCartItem = () => {
+        setIsLoadingCart(true)
+        const reference = database().ref(`/users/${user.uid}/cart`)
+        reference.on('value', async (snapshot) => {
+            try {
+                const data = snapshot.val()
+
+                if (!data) { // Nếu giỏ hàng rỗng
+                    console.log("No cart data found");
+                    setCartItem([]); 
+                    setTotalAmountCart(0);
+                    setIsLoadingCart(false)
+                    return;
+                }
+
+                const cartItemArray:CartItem[] = Object.values(data)
+
+                //chuyển đường dẫn thư mục trong firestorage thành link
+                const updateCartItem = await Promise.all(
+                cartItemArray.map(async (item) => {
+                        const image_url = await getImageURL(item.cartItemImageUrl.toString())
+                        return {...item, cartItemImageUrl : image_url}; 
+                    })
+                )
+
+                //tinh tong tien totalAmountCart
+                const total = cartItemArray.reduce((sum, item:CartItem )=> sum += item.cartItemTotalPrice ,0)
+                
+                setTotalAmountCart(total)
+                setCartItem(updateCartItem as CartItem[])
+                setIsLoadingCart(false)
+            } catch (error) {
+                console.log('Lay du lieu khong thanh cong!',error)
+            }
+            
+        });
+
+    }
     
     useEffect(()=>{
-
         //check login
         if(user===null){
             return
         }
 
-        const fetchCartItem = () => {
-            const reference = database().ref(`/users/${user.uid}/cart`)
-            reference.on('value',async (snapshot) => {
-                try {
-                    const data = snapshot.val()
-                    const cartItemArray:CartItem[] = Object.values(data)
-
-                    if (!data) {
-                        console.log("No cart data found");
-                        setCartItem([]);
-                        setTotalAmountCart(0);
-                        return;
-                      }
-        
-                    //chuyển đường dẫn thư mục trong firestorage thành link
-                    const updateCartItem = await Promise.all(
-                    cartItemArray.map(async (item) => {
-                            const image_url = await getImageURL(item.cartItemImageUrl.toString())
-                            return {...item, cartItemImageUrl : image_url}; 
-                        })
-                    )
-
-                    //tinh tong tien totalAmountCart
-                    const total = cartItemArray.reduce((sum, item:CartItem )=> sum += item.cartItemTotalPrice ,0)
-                    
-                    setTotalAmountCart(total)
-                    setCartItem(updateCartItem as CartItem[])
-                } catch (error) {
-                    console.log('Lay du lieu khong thanh cong!',error)
-                }
-                
-            });
-    
-        }
-        
         fetchCartItem()
 
     },[])
@@ -71,12 +77,29 @@ const CartScreen= () =>{
         }
     };
 
+    //xu li khi nhan Dat hang
     const handleOrderCart = () =>{
-        console.log('OrderCart')
+        navigation.navigate('OrderFormScreen',{
+            arrayCartItem: cartItem as CartItem[],
+            totalAmountCart: totalAmountCart
+        })
     }
 
     const handleDeleteItem = (id: string ) =>{
-        console.log('delete CartItem id = ',id)
+        const reference = database().ref(`/users/${user.uid}/cart/${id}`)
+        Alert.alert('Thông báo', 'Bạn muốn xóa sp khỏi giỏ hàng?', [
+        {
+            text: 'Cancel',
+            style: 'cancel',
+        },
+        {
+            text: 'Xóa', 
+            onPress: async () => {
+                await reference.remove()
+                fetchCartItem()
+            }
+        },
+        ]);
     }
 
     return(
@@ -85,40 +108,71 @@ const CartScreen= () =>{
 
                     <View style={[styles.body,{height:height*0.8}]}>
                         {/* flatlist */}
-                        <FlatList
-                            data={cartItem}
-                            renderItem={({item}:any) => 
-                                <View style={[styles.cartItemContainer,{width:'auto',height:height*0.14}]}>
-                                    <Image source={{ uri: item.cartItemImageUrl }} style={[styles.ImageStyles,{width:height*0.14-10}]}/>
-                                    <View style={styles.inforCartItem}>
-                                        <Text style={styles.NameCartItem}>{item.cartItemName}</Text>
-                                        <Text>Size: {item.cartItemSize}</Text>
-                                        <Text>Số lượng: {item.cartItemQuantity}</Text>
-                                        <Text>Thành tiền: {item.cartItemTotalPrice.toLocaleString('vi-VN')} đ</Text>
-                                    </View>
-                                    <View style={styles.viewDelete}>
-                                        <TouchableOpacity onPress={()=> handleDeleteItem(item.cartItemId)}>
-                                            <View style={styles.buttonDelete}>
-                                                <Text style={{fontWeight:700,color:'#ffffff'}}>Xóa</Text>
+                        {
+                            (user===null)
+                            ?
+                            (<View style={styles.view1}>
+                                    <Text>Bạn chưa đăng nhập</Text>
+                            </View>)
+                            :
+                            (
+                                (isLoadingCart)
+                                ?
+                                (<View style={styles.view1}>
+                                    <ActivityIndicator size={"large"}/>
+                                </View>)
+                                :
+                                (
+                                    (cartItem.length===0)
+                                    ?
+                                    (<View style={styles.view1}>
+                                        <Text>Giỏ hàng trống</Text>
+                                    </View>)
+                                    :
+                                    (<FlatList
+                                        data={cartItem}
+                                        renderItem={({item}:any) => 
+                                            <View style={[styles.cartItemContainer,{width:'auto',height:height*0.14}]}>
+                                                <Image source={{ uri: item.cartItemImageUrl }} style={[styles.ImageStyles,{width:height*0.14-10}]}/>
+                                                <View style={styles.inforCartItem}>
+                                                    <Text style={styles.NameCartItem}>{item.cartItemName}</Text>
+                                                    <Text>Size: {item.cartItemSize}</Text>
+                                                    <Text>Số lượng: {item.cartItemQuantity}</Text>
+                                                    <Text>Thành tiền: {item.cartItemTotalPrice.toLocaleString('vi-VN')} đ</Text>
+                                                </View>
+                                                <View style={styles.viewDelete}>
+                                                    <TouchableOpacity onPress={()=> handleDeleteItem(item.id)}>
+                                                        <View style={styles.buttonDelete}>
+                                                            <Text style={{fontWeight:700,color:'#ffffff'}}>Xóa</Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                </View>
                                             </View>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            }
-                            keyExtractor={item => item.cartItemId}
-                        />
+                                        }
+                                        keyExtractor={item => item.id }
+                                    />)
+                                )
+                            )
+                        }
                     </View>
 
-                <View style={[styles.bottom,{height:height*0.1}]}>
-                    <View style={styles.textTotalAmountCart}>
-                        <Text style={{marginLeft:27,fontSize:20}}>Tổng: {totalAmountCart.toLocaleString('vi-VN')} đ</Text>
-                    </View>
-                    <TouchableOpacity style={styles.button} onPress={handleOrderCart}>
-                        <View>
-                            <Text style={{fontSize:20,color:'white',fontWeight:800}}>Đặt hàng!</Text>
+                {
+                    (user!=null && cartItem.length!=0)
+                    ?
+                    (<View style={[styles.bottom,{height:height*0.1}]}>
+                        <View style={styles.textTotalAmountCart}>
+                            <Text style={{marginLeft:27,fontSize:20}}>Tổng: {totalAmountCart.toLocaleString('vi-VN')} đ</Text>
                         </View>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity style={styles.button} onPress={handleOrderCart}>
+                            <View>
+                                <Text style={{fontSize:20,color:'white',fontWeight:800}}>Đặt hàng!</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>)
+                    :
+                    (null)
+                }
+                
 
             </View>
         </SafeAreaView>
@@ -202,6 +256,12 @@ const styles = StyleSheet.create({
         width:40,
         backgroundColor:COLOR_RED,
         borderRadius:10,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    view1:{
+        borderWidth:0,
+        flex:1,
         justifyContent:'center',
         alignItems:'center'
     }

@@ -9,6 +9,10 @@ export type RootStackParamList = {
     RegisterScreen:undefined;
     LoginScreen:undefined;
     DetailOrderScreen:{orderItem:Order};
+    OrderFormScreen:{
+        arrayCartItem : CartItem[],
+        totalAmountCart: number
+    };
 }
 
 export type Category = {

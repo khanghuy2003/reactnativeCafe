@@ -17,7 +17,7 @@ const OrdersScreen=( {navigation}:OrdersScreenProps )=>{
         const fetchOrderItem = async () => {
             try {
                 const reference = database().ref(`/users/${user.uid}/orders`)
-                await reference.once('value').then(async (snapshot)=>{
+                await reference.on('value',async (snapshot)=>{
                 const data = await snapshot.val()
                     if (data) {
                         const array: Order[] = Object.values(data);
@@ -72,8 +72,9 @@ const OrdersScreen=( {navigation}:OrdersScreenProps )=>{
     return(
         <SafeAreaView style={{flex:1}}>
             <FlatList
-            data={orderItem}
-            renderItem={({item}) => renderItem(item)}
+                data={orderItem}
+                renderItem={({item}) => renderItem(item)}
+                keyExtractor = {(item,index) => item.orderId}
             />
         </SafeAreaView>
     )
