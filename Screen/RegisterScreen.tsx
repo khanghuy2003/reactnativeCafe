@@ -1,4 +1,4 @@
-import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Alert, Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TextInputItem from "../Component/TextInputItem";
 import ButtonItem from "../Component/ButtonItem";
@@ -6,6 +6,8 @@ import SocialLoginButton from "../Component/SocialLoginButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../type/type";
 import { useState } from "react";
+import auth from '@react-native-firebase/auth';
+import database, { ref } from '@react-native-firebase/database';
 
 type RegisterScreenProps = NativeStackScreenProps<RootStackParamList,'RegisterScreen'>
 
@@ -13,6 +15,41 @@ function RegisterScreen({navigation}:RegisterScreenProps){
     //accept Privacy Policy and Term of Use
     const [accept,setAccept] = useState(false)
     const [hidePassword,setHidePassword] = useState(true)
+
+    const [firstName,setFirstName] = useState('')
+    const [lastName,setLastName] = useState('')
+
+    const [email,setEmail] = useState('')
+    const [password,setPassword] = useState('')
+
+    const saveUser = (email:string, uid:string) => {
+        const referrence = database().ref(`/users/${uid}`)
+        referrence.set({
+            email: email,
+            userId: uid,
+          })
+    }
+
+    const handleRegister = async () => {
+        try {
+            // Đăng ký với email & password
+            const userCredential = await auth().createUserWithEmailAndPassword(email, password);
+            const user = userCredential.user;
+
+            if (user) {
+                const uid = user.uid;
+                await database().ref(`/users/${uid}`).set({
+                    email: email,
+                    userId: uid,
+                });
+                Alert.prompt('xong','success')
+                navigation.navigate("MyTabsScreen")
+            }
+        } catch (error:any) {
+            console.error('Lỗi đăng ký:', error.message);
+            Alert.alert('Lỗi', error.message);
+        }
+    }
 
     return(
         <SafeAreaView style={{flex:1}}>
@@ -31,14 +68,24 @@ function RegisterScreen({navigation}:RegisterScreenProps){
 
                         {/* Input */}
                         <View style={styles.inputContainerStyle}>
-                            <TextInputItem image1={require('../assets/name.png')} placeHolderHint={"First Name"}/>
-                            <TextInputItem image1={require('../assets/name.png')} placeHolderHint={"Last Name"}/>
-                            <TextInputItem image1={require('../assets/email.png')} placeHolderHint={"Email"}/>
+                            <TextInputItem 
+                                image1={require('../assets/name.png')} 
+                                placeHolderHint={"First Name"}
+                                onChangeText={setFirstName}/>
+                            <TextInputItem 
+                                image1={require('../assets/name.png')} 
+                                placeHolderHint={"Last Name"}
+                                onChangeText={setLastName}/>
+                            <TextInputItem 
+                                image1={require('../assets/email.png')} 
+                                placeHolderHint={"Email"}
+                                onChangeText = {setEmail}/>
                             <TextInputItem 
                                 image1={require('../assets/password.png')} 
                                 placeHolderHint={"Password"} 
                                 image2={require("../assets/hidepassword.png")} 
-                                secureTextEntry={hidePassword}/>
+                                secureTextEntry={hidePassword}
+                                onChangeText = {setPassword}/>
                             <View style={{width:270,height:30,flexDirection:"row",marginTop:10}}>
                                 <TouchableOpacity onPress={() => setAccept(!accept)}>
                                     <View style={{width:16,height:16,borderWidth:0.8,borderColor:"#ADA4A5",borderRadius:3,marginRight:10,alignItems:"center",justifyContent:"center"}}>
@@ -70,7 +117,7 @@ function RegisterScreen({navigation}:RegisterScreenProps){
                     <View>
                         {/* Button */}
                         <View style={{marginBottom:30}}>
-                            <TouchableOpacity onPress={()=>{navigation.navigate('MyTabsScreen')}}>
+                            <TouchableOpacity onPress={handleRegister}>
                                 <ButtonItem 
                                     textButton={"Register"}/>
                             </TouchableOpacity>

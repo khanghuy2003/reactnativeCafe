@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { FlatList, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { COLOR_RED, Order, RootStackParamList } from "../type/type"
 import  database  from "@react-native-firebase/database"
@@ -11,23 +11,27 @@ type OrdersScreenProps = NativeStackScreenProps<RootStackParamList,'OrdersScreen
 const OrdersScreen=( {navigation}:OrdersScreenProps )=>{
     const {user}:any = useAuth()
     const [orderItem,setOrderItem] = useState<ArrayLike<any>>([])
+    const [isLoadingOrder,setIsLoadingOrder] = useState(true)
 
     useEffect(() => {
         //fetch danh sach order
         const fetchOrderItem = async () => {
             try {
                 const reference = database().ref(`/users/${user.uid}/orders`)
-                await reference.on('value',async (snapshot)=>{
+                reference.on('value',async (snapshot)=>{
                 const data = await snapshot.val()
                     if (data) {
                         const array: Order[] = Object.values(data);
                         setOrderItem(array);
+                        setIsLoadingOrder(false)
                     } else {
                         console.log('Không lấy được dữ liệu!')
+                        setIsLoadingOrder(false)
                     }
                 })
             } catch (error) {
                 console.log('Lỗi khi kết nối CSDL', error)
+                setIsLoadingOrder(false)
             }
         }
         fetchOrderItem()
@@ -71,11 +75,37 @@ const OrdersScreen=( {navigation}:OrdersScreenProps )=>{
 
     return(
         <SafeAreaView style={{flex:1}}>
-            <FlatList
-                data={orderItem}
-                renderItem={({item}) => renderItem(item)}
-                keyExtractor = {(item,index) => item.orderId}
-            />
+            
+            {/* flatlist */}
+            {
+                (user===null)
+                ?
+                (<View style={styles.view1}>
+                        <Text>Bạn chưa đăng nhập</Text>
+                </View>)
+                :
+                (
+                    (isLoadingOrder)
+                    ?
+                    (<View style={styles.view1}>
+                        <ActivityIndicator size={"large"}/>
+                    </View>)
+                    :
+                    (
+                        (orderItem.length===0)
+                        ?
+                        (<View style={styles.view1}>
+                            <Text>Không có đơn hàng!</Text>
+                        </View>)
+                        :
+                        (<FlatList
+                            data={orderItem}
+                            renderItem={({item}) => renderItem(item)}
+                            keyExtractor = {(item,index) => item.orderId}
+                        />)
+                    )
+                )
+            }
         </SafeAreaView>
     )
 }
@@ -110,6 +140,12 @@ const styles = StyleSheet.create({
     },
     textNameOrder:{
         fontWeight:800
+    },
+    view1:{
+        borderWidth:0,
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
     }
 })
 

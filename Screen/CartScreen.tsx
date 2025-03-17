@@ -9,7 +9,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack"
 
 type CartScreenProps = NativeStackScreenProps<RootStackParamList,'CartScreen'>
 
-const CartScreen= ({navigation}:CartScreenProps) =>{
+const CartScreen= ({navigation}:CartScreenProps) => {
     const width = useWindowDimensions().width
     const height = useWindowDimensions().height
     const {user}:any = useAuth()
@@ -62,9 +62,7 @@ const CartScreen= ({navigation}:CartScreenProps) =>{
         if(user===null){
             return
         }
-
         fetchCartItem()
-
     },[])
 
     const getImageURL = async (path: string) => {

@@ -40,7 +40,7 @@ export type User = {
      userId: String,  // ID người dùng, sẽ lấy từ Firebase Authentication
      email: String,  // Địa chỉ email của người dùng
      cart: CartItem[],  // Giỏ hàng của người dùng
-     orders: Order  // Danh sách đơn hàng của người dùng
+     orders: Order[]  // Danh sách đơn hàng của người dùng
 }
     
 export type CartItem = {
