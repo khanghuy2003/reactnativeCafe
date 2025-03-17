@@ -38,7 +38,7 @@ const OrderFormScreen = ({navigation,route}:OrderFormScreenProps) =>{
             name: nameInput,
             address: addressInput,
             phone: phoneInput,
-            paymentMethod: '',
+            paymentMethod: 'Thanh toán khi nhận hàng',
             orderItems:arrayCartItem,
             orderDateTime: getCurrentDateTime(),
             status: 'Đang xử lý',
@@ -90,9 +90,9 @@ const OrderFormScreen = ({navigation,route}:OrderFormScreenProps) =>{
                         <View style={styles.view1}>
                             <Text style={styles.text1}>Điền thông tin người nhận</Text>
                             <View style={styles.view2}>
-                                <TextInputItem placeHolderHint='Tên người nhận' image1={require('../assets/user2.png')} onChangeText={()=>{}}/>
-                                <TextInputItem placeHolderHint='Địa chỉ' image1={require('../assets/earth.png')} onChangeText={()=>{}}/>
-                                <TextInputItem placeHolderHint='Số điện thoại' image1={require('../assets/phone.png')} keyboardType={'numeric'} onChangeText={()=>{}}/>
+                                <TextInputItem placeHolderHint='Tên người nhận' image1={require('../assets/user2.png')} onChangeText={(text:any)=>{setNameInput(text)}}/>
+                                <TextInputItem placeHolderHint='Địa chỉ' image1={require('../assets/earth.png')} onChangeText={(text:any)=>{setAddressInput(text)}}/>
+                                <TextInputItem placeHolderHint='Số điện thoại' image1={require('../assets/phone.png')} keyboardType={'numeric'} onChangeText={(text:any)=>{setPhoneInput(text)}}/>
                             </View>
                         </View>
         

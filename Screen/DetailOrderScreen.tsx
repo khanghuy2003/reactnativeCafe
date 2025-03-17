@@ -2,6 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack"
 import { Button, FlatList, StyleProp, StyleSheet, Text, TextStyle, Touchable, TouchableOpacity, View } from "react-native"
 import { CartItem, COLOR_RED, RootStackParamList } from "../type/type"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { useEffect } from "react"
 
 
 type DetailOrderScreenProps = NativeStackScreenProps<RootStackParamList,'DetailOrderScreen'>
@@ -26,6 +27,10 @@ const DetailOrderScreen = ({navigation,route}:DetailOrderScreenProps) =>{
         }
     };
 
+    useEffect(()=>{
+        console.log(route.params.orderItem)
+    },[])
+
     return (
         <SafeAreaView style={{flex:1}}>
             <View style={styles.container}>
@@ -43,7 +48,6 @@ const DetailOrderScreen = ({navigation,route}:DetailOrderScreenProps) =>{
                     {/* Data */}
                     <FlatList
                         data={orderItems}
-                        keyExtractor={orderItems => orderItems.cartItemId.toString()}
                         renderItem={({ item, index }) => (
                         <View style={styles.row}>
                             <Text style={styles.cellSTT}>{index}</Text>
@@ -53,8 +57,9 @@ const DetailOrderScreen = ({navigation,route}:DetailOrderScreenProps) =>{
                             <Text style={styles.cell}>{item.cartItemTotalPrice.toLocaleString('vi-VN')} đ</Text>
                         </View>
                         )}
+                        keyExtractor={(item: CartItem, index: number) => index.toString()}
                     />
-                    <Text style={{fontSize:15,marginVertical:3,marginLeft:4,textAlign:'right',fontWeight:500}}>Tổng tiền: {totalPaymentOrder}</Text>
+                    <Text style={{fontSize:15,marginVertical:3,marginLeft:4,textAlign:'right',fontWeight:500}}>Tổng tiền: {Number(totalPaymentOrder).toLocaleString('vi-VN')}đ</Text>
                 </View>
 
                 {/* thong tin nguoi dung dat hang */}
