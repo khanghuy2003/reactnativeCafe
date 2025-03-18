@@ -10,23 +10,32 @@ import { getAuth, signInWithEmailAndPassword } from '@react-native-firebase/auth
 import { getDatabase } from '@react-native-firebase/database';
 import { getStorage } from '@react-native-firebase/storage';
 import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
-
-type LoginScreenProps= NativeStackScreenProps<RootStackParamList,"LoginScreen">
-function LoginScreen({navigation}:LoginScreenProps) {
+type AdminLoginScreenProps= NativeStackScreenProps<RootStackParamList,"AdminLoginScreen">
+function AdminLoginScreen({navigation}:AdminLoginScreenProps) {
 
     const [hidePassword,setHidePassword] = useState(true)
-    const [email,setEmail] = useState<string>('')
+    const [adminName,setAdminName] = useState<string>('')
     const [password,setPassWord] = useState<string>('')
     const [error,setError] = useState('')
 
+
     const handleLogin = async () => {
-        try {
-          await auth().signInWithEmailAndPassword(email, password);
-          navigation.navigate('MyTabsScreen');
-        } catch (err: any) {
-          setError('Email hoặc password không hợp lệ!');
-        }
+        
+            try {
+                database().ref(`/admin`).once('value').then(async (snapshot) => {
+                    const admin = snapshot.val()
+                    if(admin.admin === adminName && admin.password === password){
+                        navigation.navigate('AdminMainScreen')
+                    }else{
+                        setError("Sai tài khoản hoặc mật khẩu!")
+                    }
+                })
+            } catch (error) {
+                console.log('error')
+            }
+        
       };
       
       
@@ -41,19 +50,9 @@ function LoginScreen({navigation}:LoginScreenProps) {
             <View style={styles.container}>
             {/* 2 dòng chữ và 2 ô input */}
             <View >
-
-            <TouchableOpacity
-                onPress={()=>navigation.navigate('AdminLoginScreen')}
-                >
-                <View style={styles.admin1}>
-                    <Text style={{fontSize:17}}>Admin</Text>
-                </View>
-            </TouchableOpacity>
-
                 {/* Text */}
                 <View style={{alignItems:"center", marginTop:40}}>
-                    <Text style={styles.textStyle1}>Hey there,</Text>
-                    <Text style={styles.textStyle2}>Welcome Back</Text>
+                    <Text style={styles.textStyle2}>Admin Login</Text>
                 </View>
                 
                 {/* Input */}
@@ -61,21 +60,16 @@ function LoginScreen({navigation}:LoginScreenProps) {
                     <TextInputItem 
                         image1={require('../assets/email.png')} 
                         image2={null} 
-                        placeHolderHint={"Email"}
-                        onChangeText={setEmail}/>
+                        placeHolderHint={"Tên đăng nhập"}
+                        onChangeText={setAdminName}/>
                     <TextInputItem 
                         image1={require('../assets/password.png')} 
                         image2={require('../assets/hidepassword.png')} 
-                        placeHolderHint={"Password"} 
+                        placeHolderHint={"Mật khẩu"} 
                         secureTextEntry={hidePassword}
                         onChangeText={setPassWord}/>
-                        
-                        <TouchableOpacity>
-                            <View style={{alignItems:"center",marginTop:3}}>
-                                <Text style={styles.textStyles3}>Forgot your password?</Text>
-                            </View>
-                        </TouchableOpacity>
                 </View>
+
                 <View style={{width:'auto',alignItems:'center',marginTop:10}}>
                     {error ? <Text style={styles.error}>{error}</Text> : null}
                 </View>
@@ -94,33 +88,14 @@ function LoginScreen({navigation}:LoginScreenProps) {
                             iconButton={require('../assets/iconlogin.png')}/>
                     </TouchableOpacity>
                 </View>
-                {/* -------- Or --------- */}
-                <View style={{
-                        flexDirection:"row",
-                        width:315,
-                        height:18,
-                        justifyContent:"center",
-                        alignItems:"center",
-                        // marginTop:20
-                        }}>
-                    <View style={styles.line}></View>
-                    <Text style={{marginHorizontal:10}}>Or</Text>
-                    <View style={styles.line}></View>
-                </View>
-                {/* Nut google, facebook  (Social login buttons)*/}
-                <View style={{alignItems:"center",marginTop:30,marginBottom:20}}>
-                    <View style={styles.socialButtonContainer}>
-                            <SocialLoginButton logoButton={require('../assets/logogoogle.png')}/>
-                            <SocialLoginButton logoButton={require('../assets/logofacebook.png')}/>
-                    </View>
-                </View>
+                
                 {/* Don’t have an account yet? Register */}
                 <View style={{alignItems:"center",marginBottom:10,marginTop:10,flexDirection:"row",justifyContent:"center"}}>
-                    <Text style={styles.textStyle1}>Don’t have an account yet? </Text>
+                    <Text style={styles.textStyle1}>Quay lại màn hình </Text>
                     {/* Dang ki */}
-                    <TouchableOpacity onPress={()=> navigation.navigate("RegisterScreen")}>
+                    <TouchableOpacity onPress={()=> navigation.navigate("LoginScreen")}>
                         <Text style={{color:"#e95cff"}}>
-                            Register
+                            Đăng nhập khách hàng
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -145,8 +120,9 @@ function LoginScreen({navigation}:LoginScreenProps) {
             flex:1,
             alignItems:"center",
             backgroundColor:"#ffffff",
-            justifyContent:"space-around",
-            borderWidth:0
+            // justifyContent:"space-around",
+            borderWidth:0,
+            justifyContent:'center'
         },
         textStyle1:{
             // fontFamily:"Poppins",
@@ -173,8 +149,9 @@ function LoginScreen({navigation}:LoginScreenProps) {
 
         },
         inputContainer:{
-            height:160,
+            height:130,
             width:315,
+            marginBottom:30
         },
         line:{
             borderWidth:0.5,
@@ -202,4 +179,4 @@ function LoginScreen({navigation}:LoginScreenProps) {
             alignSelf:'flex-end'
           }
     })
-export default LoginScreen
+export default AdminLoginScreen

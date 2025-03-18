@@ -20,6 +20,10 @@ import '@react-native-firebase/auth';
 import { AuthProvider } from './firebase/AuthContext';
 import DetailOrderScreen from './Screen/DetailOrderScreen';
 import OrderFormScreen from './Screen/OrderFormScreen';
+import AdminLoginScreen from './Screen/AdminLoginScreen';
+import AdminMainScreen from './Screen/AdminMainScreen';
+import AddProductScreen from './Screen/AddProductScreen';
+import ListProductScreen from './Screen/ListProductScreen';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -114,6 +118,10 @@ const App = () => {
           <Stack.Screen name = "RegisterScreen" component={RegisterScreen}/>
           <Stack.Screen name = "DetailOrderScreen" component={DetailOrderScreen}/>
           <Stack.Screen name = "OrderFormScreen" component={OrderFormScreen}/>
+          <Stack.Screen name = "AdminLoginScreen" component={AdminLoginScreen}/>
+          <Stack.Screen name = "AdminMainScreen" component={AdminMainScreen}/>
+          <Stack.Screen name = "AddProductScreen" component={AddProductScreen}/>
+          <Stack.Screen name = "ListProductScreen" component={ListProductScreen}/>
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

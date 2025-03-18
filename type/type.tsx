@@ -13,6 +13,10 @@ export type RootStackParamList = {
         arrayCartItem : CartItem[],
         totalAmountCart: number
     };
+    AdminLoginScreen:undefined;
+    AdminMainScreen:undefined;
+    AddProductScreen:undefined;
+    ListProductScreen:undefined
 }
 
 export type Category = {
