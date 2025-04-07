@@ -25,11 +25,11 @@ const AdminMainScreen = ({navigation}:AdminMainScreenProps) => {
                         image={require('../assets/listdrink.png')}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <AddProduct 
                         name={'Thêm danh mục'} 
                         image={require('../assets/categoryadd.png')}/>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
             </View>
         </View>
