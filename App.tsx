@@ -24,6 +24,7 @@ import AdminLoginScreen from './Screen/AdminLoginScreen';
 import AdminMainScreen from './Screen/AdminMainScreen';
 import AddProductScreen from './Screen/AddProductScreen';
 import ListProductScreen from './Screen/ListProductScreen';
+import AllOrdersScreen from './Screen/AllOrdersScreen';
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -122,6 +123,7 @@ const App = () => {
           <Stack.Screen name = "AdminMainScreen" component={AdminMainScreen}/>
           <Stack.Screen name = "AddProductScreen" component={AddProductScreen}/>
           <Stack.Screen name = "ListProductScreen" component={ListProductScreen}/>
+          <Stack.Screen name="AllOrdersScreen" component={AllOrdersScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
