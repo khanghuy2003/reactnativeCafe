@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndi
 import database, { DataSnapshot } from '@react-native-firebase/database';
 import { Order } from '../type/type';
 import Modal from 'react-native-modal';
+import { Picker } from '@react-native-picker/picker';
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -12,6 +14,8 @@ const AllOrdersScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [statusLoading, setStatusLoading] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState<string>('Tất cả');
+
 
   // Fetch Orders from Firebase
   useEffect(() => {
@@ -180,14 +184,31 @@ const AllOrdersScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Tất cả đơn hàng</Text>
+      <Text style={styles.header}>Danh sách đơn hàng</Text>
+
+      <Picker
+        selectedValue={selectedStatus}
+        onValueChange={(itemValue) => setSelectedStatus(itemValue)}
+        style={{ marginBottom: 10 }}
+      >
+        <Picker.Item label="Tất cả" value="Tất cả" />
+        <Picker.Item label="Đã hoàn thành" value="Đã hoàn thành" />
+        <Picker.Item label="Đã hủy" value="Đã hủy" />
+        <Picker.Item label="Đang xử lý" value="Đang xử lý" />
+      </Picker>
+
+
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" />
         </View>
       ) : (
         <FlatList
-          data={orders}
+          data={
+            selectedStatus === 'Tất cả'
+              ? orders
+              : orders.filter(order => order.status === selectedStatus)
+          }    
           renderItem={renderItem}
           keyExtractor={(item) => item.orderId?.toString()}
         />

@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Alert, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { CartItem, COLOR_RED, Order, RootStackParamList } from "../type/type"
 import { SafeAreaView } from "react-native-safe-area-context"
 import TextInputItem from "../Component/TextInputItem"
@@ -29,30 +29,54 @@ const OrderFormScreen = ({navigation,route}:OrderFormScreenProps) =>{
         return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
     }
 
-    const handleOrder = () => {
-        const reference = database().ref(`/users/${user.uid}/orders`).push();
-        const keyOrderId:any =  reference.key
 
-        const orderObject : Order = {
-            orderId: keyOrderId,
-            name: nameInput,
-            address: addressInput,
-            phone: phoneInput,
-            paymentMethod: 'Thanh toán khi nhận hàng',
-            orderItems:arrayCartItem,
-            orderDateTime: getCurrentDateTime(),
-            status: 'Đang xử lý',
-            totalPaymentOrder:totalAmountCart.toString()
-        }
-
-        reference.set(orderObject)
-          .then(
-            async () => {
-                await database().ref(`/users/${user.uid}/cart`).remove()
-                navigation.goBack();
-            }
-        );
+const handleOrder = () => {
+    if (!nameInput.trim() || !addressInput.trim() || !phoneInput.trim()) {
+        Alert.alert("Lỗi", "Vui lòng điền đầy đủ thông tin.");
+        return;
     }
+
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    const addressRegex = /^[a-zA-Z0-9\s]+$/;
+    const phoneRegex = /^[0-9]+$/;
+
+    if (!nameRegex.test(nameInput)) {
+        Alert.alert("Lỗi", "Tên người nhận chỉ được chứa chữ cái (a-z, A-Z).");
+        return;
+    }
+
+    if (!addressRegex.test(addressInput)) {
+        Alert.alert("Lỗi", "Địa chỉ chỉ được chứa chữ cái và số (a-z, A-Z, 0-9).");
+        return;
+    }
+
+    if (!phoneRegex.test(phoneInput)) {
+        Alert.alert("Lỗi", "Số điện thoại chỉ được chứa chữ số (0-9).");
+        return;
+    }
+
+    const reference = database().ref(`/users/${user.uid}/orders`).push();
+    const keyOrderId: any = reference.key;
+
+    const orderObject: Order = {
+        orderId: keyOrderId,
+        name: nameInput,
+        address: addressInput,
+        phone: phoneInput,
+        paymentMethod: 'Thanh toán khi nhận hàng',
+        orderItems: arrayCartItem,
+        orderDateTime: getCurrentDateTime(),
+        status: 'Đang xử lý',
+        totalPaymentOrder: totalAmountCart.toString()
+    };
+
+    reference.set(orderObject).then(async () => {
+        await database().ref(`/users/${user.uid}/cart`).remove();
+        navigation.goBack();
+    });
+};
+
+    
 
     return(
         <SafeAreaView style={{flex:1}}>
@@ -91,7 +115,7 @@ const OrderFormScreen = ({navigation,route}:OrderFormScreenProps) =>{
                             <Text style={styles.text1}>Điền thông tin người nhận</Text>
                             <View style={styles.view2}>
                                 <TextInputItem placeHolderHint='Tên người nhận' image1={require('../assets/user2.png')} onChangeText={(text:any)=>{setNameInput(text)}}/>
-                                <TextInputItem placeHolderHint='Địa chỉ' image1={require('../assets/earth.png')} onChangeText={(text:any)=>{setAddressInput(text)}}/>
+                                <TextInputItem placeHolderHint='Địa chỉ' image1={require('../assets/earth.png')} onChangeText={(text:any)=>{setAddressInput(text)}} />
                                 <TextInputItem placeHolderHint='Số điện thoại' image1={require('../assets/phone.png')} keyboardType={'numeric'} onChangeText={(text:any)=>{setPhoneInput(text)}}/>
                             </View>
                         </View>

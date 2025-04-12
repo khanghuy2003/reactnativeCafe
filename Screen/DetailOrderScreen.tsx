@@ -1,8 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
-import { Button, FlatList, StyleProp, StyleSheet, Text, TextStyle, Touchable, TouchableOpacity, View } from "react-native"
+import { Alert, Button, FlatList, StyleProp, StyleSheet, Text, TextStyle, Touchable, TouchableOpacity, View } from "react-native"
 import { CartItem, COLOR_RED, RootStackParamList } from "../type/type"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useEffect } from "react"
+import { getDatabase, ref, update } from "@react-native-firebase/database"
+import { useAuth } from "../firebase/AuthContext"
 
 
 type DetailOrderScreenProps = NativeStackScreenProps<RootStackParamList,'DetailOrderScreen'>
@@ -19,6 +21,8 @@ const DetailOrderScreen = ({navigation,route}:DetailOrderScreenProps) =>{
         totalPaymentOrder
     } = route.params.orderItem
 
+    const {user}:any = useAuth()
+
     const handleColorStatus = (status: string): StyleProp<TextStyle> => {
         switch (status.toLowerCase()) {
             case "đã hủy": return { color: "red" };
@@ -26,6 +30,41 @@ const DetailOrderScreen = ({navigation,route}:DetailOrderScreenProps) =>{
             default: return { color: "black" };
         }
     };
+
+    const handleCancelOrder = () => {
+        Alert.alert(
+          "Xác nhận hủy đơn",
+          "Bạn có chắc chắn muốn hủy đơn hàng này không?",
+          [
+            {
+              text: "Không",
+              style: "cancel"
+            },
+            {
+              text: "Hủy đơn",
+              onPress: async () => {
+                try {
+                  const db = getDatabase();
+                  const userId = user.uid; // <== bạn cần có userId nếu lưu đơn hàng trong node người dùng
+                  const orderId = route.params.orderItem.orderId;
+      
+                  const orderRef = ref(db, `users/${userId}/orders/${orderId}`);
+      
+                  await update(orderRef, { status: "Đã hủy" });
+      
+                  Alert.alert("Thành công", "Đơn hàng đã được hủy.");
+                  navigation.goBack();
+                } catch (error) {
+                  console.error("Lỗi khi hủy đơn hàng:", error);
+                  Alert.alert("Lỗi", "Không thể hủy đơn hàng. Vui lòng thử lại.");
+                }
+              }
+            }
+          ]
+        );
+      };
+      
+    
 
     useEffect(()=>{
         console.log(route.params.orderItem)
@@ -99,22 +138,23 @@ const DetailOrderScreen = ({navigation,route}:DetailOrderScreenProps) =>{
                 </View>
                 {/* Các button */}
                 <View style={{flexDirection:'row',marginTop:20,justifyContent:'space-evenly'}}>
-                    <TouchableOpacity>
-                        <View style={styles.button}>
-                            <Text style={styles.text5}>Edit</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <View style={styles.button}>
-                            <Text style={styles.text5}>Hủy order</Text>
-                        </View>
-                    </TouchableOpacity>
+                    {status !== "Đã hoàn thành" && status !== "Đã hủy" && (
+                        <>
+                            <TouchableOpacity onPress={handleCancelOrder}>
+                                <View style={styles.button}>
+                                    <Text style={styles.text5}>Hủy order</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                        </>
+                    )}
                     <TouchableOpacity onPress={()=>navigation.goBack()}>
                         <View style={styles.button}>
                             <Text style={styles.text5}>Back</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
+
             </View>
         </SafeAreaView>
     )

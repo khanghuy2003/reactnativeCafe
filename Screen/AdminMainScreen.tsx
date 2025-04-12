@@ -1,14 +1,43 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Image, StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native"
 import { RootStackParamList } from "../type/type"
 
 
 type AdminMainScreenProps = NativeStackScreenProps<RootStackParamList,"AdminMainScreen">
 const AdminMainScreen = ({navigation}:AdminMainScreenProps) => {
+    
+    const handleLogout = () => {
+        Alert.alert(
+            "Đăng xuất",
+            "Bạn có chắc chắn muốn đăng xuất?",
+            [
+                {
+                    text: "Hủy",
+                    style: "cancel"
+                },
+                {
+                    text: "Đồng ý",
+                    onPress: () => navigation.navigate("AdminLoginScreen")
+                }
+            ]
+        )
+    }
+    
     return(
         <View style={styles.container}>
-            <View style={styles.view1}>
+            {/* Logout Button */}
+            <TouchableOpacity 
+                style={styles.logoutButton}
+                onPress={handleLogout}
+            >
+                <Image 
+                    source={require('../assets/logout.png')} 
+                    style={styles.logoutIcon}
+                />
+                <Text style={styles.logoutText}>Đăng xuất</Text>
+            </TouchableOpacity>
 
+            <View style={styles.view1}>
                 <Text
                     style={styles.text2}
                 >ADMIN</Text>
@@ -30,8 +59,6 @@ const AdminMainScreen = ({navigation}:AdminMainScreenProps) => {
                         name={'Hóa đơn'} 
                         image={require('../assets/categoryadd.png')}/>
                 </TouchableOpacity>
-
-
             </View>
         </View>
     )
@@ -56,7 +83,8 @@ const styles = StyleSheet.create({
         flex:1,
         borderWidth:0,
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        position: 'relative'
     },
     view1:{
         borderWidth:0,
@@ -81,5 +109,27 @@ const styles = StyleSheet.create({
         fontSize:50,
         fontWeight:'500',
         marginBottom:20
+    },
+    logoutButton: {
+        position: 'absolute',
+        top: 20,
+        right: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#f44336',
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        borderRadius: 8,
+        elevation: 3
+    },
+    logoutIcon: {
+        width: 20,
+        height: 20,
+        tintColor: '#ffffff'
+    },
+    logoutText: {
+        color: '#ffffff',
+        marginLeft: 5,
+        fontWeight: 'bold'
     }
 })

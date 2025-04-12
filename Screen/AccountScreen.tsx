@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack"
-import { Button, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
+import { Alert, Button, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View } from "react-native"
 import { COLOR_RED, RootStackParamList } from "../type/type"
 import { SafeAreaView } from "react-native-safe-area-context"
 import InforAcc from "../Component/InforAcc"
@@ -23,8 +23,24 @@ const AccountScreen = ({navigation}:AccountScreenProps) => {
     }, [user]);
 
     const handleLogout = async () =>{
-        await logout()
-        navigation.navigate('HomeScreen')
+
+        Alert.alert(
+                    "Đăng xuất",
+                    "Bạn có chắc chắn muốn đăng xuất?",
+                    [
+                        {
+                            text: "Hủy",
+                            style: "cancel"
+                        },
+                        {
+                            text: "Đồng ý",
+                            onPress: async ()=>{ 
+                                await logout()
+                                navigation.navigate('HomeScreen')
+                            }
+                        }
+                    ]
+                )
     }
 
     return(

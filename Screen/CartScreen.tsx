@@ -54,7 +54,6 @@ const CartScreen= ({navigation}:CartScreenProps) => {
             }
             
         });
-
     }
     
     useEffect(()=>{
@@ -100,6 +99,60 @@ const CartScreen= ({navigation}:CartScreenProps) => {
         ]);
     }
 
+    // Hàm xử lý tăng số lượng sản phẩm
+    const handleIncreaseQuantity = async (item: CartItem) => {
+        try {
+            // Tăng số lượng lên 1
+            const newQuantity = item.cartItemQuantity + 1;
+            
+            // Tính toán lại tổng giá tiền của sản phẩm
+            const unitPrice = item.cartItemTotalPrice / item.cartItemQuantity;
+            const newTotalPrice = unitPrice * newQuantity;
+            
+            // Cập nhật dữ liệu trong Firebase
+            const reference = database().ref(`/users/${user.uid}/cart/${item.id}`);
+            await reference.update({
+                cartItemQuantity: newQuantity,
+                cartItemTotalPrice: newTotalPrice
+            });
+            
+            // Không cần gọi fetchCartItem vì listener đã được thiết lập
+        } catch (error) {
+            console.error("Lỗi khi tăng số lượng:", error);
+            Alert.alert("Lỗi", "Không thể cập nhật số lượng sản phẩm.");
+        }
+    };
+
+    // Hàm xử lý giảm số lượng sản phẩm
+    const handleDecreaseQuantity = async (item: CartItem) => {
+        try {
+            if (item.cartItemQuantity <= 1) {
+                // // Nếu số lượng = 1 và giảm nữa thì xóa sản phẩm
+                // handleDeleteItem(item.cartItemId.toString());
+                return;
+            }
+            
+            // Giảm số lượng đi 1
+            const newQuantity = item.cartItemQuantity - 1;
+            
+            // Tính toán lại tổng giá tiền của sản phẩm
+            const unitPrice = item.cartItemTotalPrice / item.cartItemQuantity;
+            const newTotalPrice = unitPrice * newQuantity;
+            
+            // Cập nhật dữ liệu trong Firebase
+            const reference = database().ref(`/users/${user.uid}/cart/${item.id}`);
+            await reference.update({
+                cartItemQuantity: newQuantity,
+                cartItemTotalPrice: newTotalPrice
+            });
+            
+            // Không cần gọi fetchCartItem vì listener đã được thiết lập
+        } catch (error) {
+            console.error("Lỗi khi giảm số lượng:", error);
+            Alert.alert("Lỗi", "Không thể cập nhật số lượng sản phẩm.");
+        }
+    };
+
     return(
         <SafeAreaView style={{flex:1,marginBottom:0}}>
             <View style = {styles.container}>
@@ -130,12 +183,31 @@ const CartScreen= ({navigation}:CartScreenProps) => {
                                     (<FlatList
                                         data={cartItem}
                                         renderItem={({item}:any) => 
-                                            <View style={[styles.cartItemContainer,{width:'auto',height:height*0.14}]}>
+                                            <View style={[styles.cartItemContainer,{width:'auto',height:height*0.16}]}>
                                                 <Image source={{ uri: item.cartItemImageUrl }} style={[styles.ImageStyles,{width:height*0.14-10}]}/>
                                                 <View style={styles.inforCartItem}>
                                                     <Text style={styles.NameCartItem}>{item.cartItemName}</Text>
                                                     <Text>Size: {item.cartItemSize}</Text>
-                                                    <Text>Số lượng: {item.cartItemQuantity}</Text>
+                                                    
+                                                    {/* Bộ điều khiển số lượng */}
+                                                    <View style={styles.quantityControl}>
+                                                        <TouchableOpacity 
+                                                            style={styles.quantityButton}
+                                                            onPress={() => handleDecreaseQuantity(item)}
+                                                        >
+                                                            <Text style={styles.quantityButtonText}>-</Text>
+                                                        </TouchableOpacity>
+                                                        
+                                                        <Text style={styles.quantityText}>{item.cartItemQuantity}</Text>
+                                                        
+                                                        <TouchableOpacity 
+                                                            style={styles.quantityButton}
+                                                            onPress={() => handleIncreaseQuantity(item)}
+                                                        >
+                                                            <Text style={styles.quantityButtonText}>+</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                    
                                                     <Text>Thành tiền: {item.cartItemTotalPrice.toLocaleString('vi-VN')} đ</Text>
                                                 </View>
                                                 <View style={styles.viewDelete}>
@@ -262,6 +334,30 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:'center'
+    },
+    // Styles mới cho bộ điều khiển số lượng
+    quantityControl: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5
+    },
+    quantityButton: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        backgroundColor: COLOR_RED,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    quantityButtonText: {
+        color: '#ffffff',
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+    quantityText: {
+        marginHorizontal: 15,
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 })
 

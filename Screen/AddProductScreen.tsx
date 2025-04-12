@@ -72,43 +72,54 @@ const AddProductScreen = ({navigation}:AddProductScreenProps) => {
 
   // Hàm lưu sản phẩm vào Firebase
   const handleAddProduct = async () => {
+    const nameRegex = /^[a-zA-Z\s]+$/;
+  
     if (!name || !price || !imageUri) {
       Alert.alert("Vui lòng nhập đầy đủ thông tin!");
       return;
     }
-
+  
+    if (!nameRegex.test(name)) {
+      Alert.alert("Tên sản phẩm chỉ được chứa các chữ cái a-z hoặc A-Z!");
+      return;
+    }
+  
+    if (price < 10000 || price > 100000) {
+      Alert.alert("Giá sản phẩm phải từ 10.000 đến 100.000 đồng!");
+      return;
+    }
+  
     setUploading(true);
     try {
-        // Gọi uploadImage() và lấy đường dẫn
-        const imagePath = await uploadImage();
-        if (!imagePath) {
-            Alert.alert("Lỗi khi tải ảnh lên!");
-            return;
-        }
-
-        // Lưu vào Firebase với đường dẫn ảnh
-        const newProduct: Product = {
-            product_categoryid: category!!,
-            product_id: productId.toString(),
-            product_imageurl: imagePath,
-            product_name: name,
-            product_price: price,
-            product_salescount: 0,
-        };
-
-        await database().ref(`/products/${productId}`).set(newProduct);
-
-        Alert.alert("Thêm sản phẩm thành công!");
-        setName("");
-        setPrice(0);
-        setCategory(0);
-        setImageUri(null);
-    } catch (error:any) {
-        Alert.alert("Lỗi khi thêm sản phẩm:", error.message);
+      const imagePath = await uploadImage();
+      if (!imagePath) {
+        Alert.alert("Lỗi khi tải ảnh lên!");
+        return;
+      }
+  
+      const newProduct: Product = {
+        product_categoryid: category!!,
+        product_id: productId.toString(),
+        product_imageurl: imagePath,
+        product_name: name,
+        product_price: price,
+        product_salescount: 0,
+      };
+  
+      await database().ref(`/products/${productId}`).set(newProduct);
+  
+      Alert.alert("Thêm sản phẩm thành công!");
+      setName("");
+      setPrice(0);
+      setCategory(0);
+      setImageUri(null);
+    } catch (error: any) {
+      Alert.alert("Lỗi khi thêm sản phẩm:", error.message);
     }
-
+  
     setUploading(false);
-};
+  };
+  
 
 
   return (
