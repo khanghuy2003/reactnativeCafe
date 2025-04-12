@@ -18,6 +18,7 @@ export type RootStackParamList = {
     AddProductScreen:undefined;
     ListProductScreen:undefined;
     AllOrdersScreen: undefined;
+    StatisticsScreen:undefined;
 }
 
 export type Category = {

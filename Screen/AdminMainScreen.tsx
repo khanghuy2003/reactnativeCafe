@@ -57,7 +57,13 @@ const AdminMainScreen = ({navigation}:AdminMainScreenProps) => {
                 <TouchableOpacity onPress={() => navigation.navigate("AllOrdersScreen")}>
                     <AddProduct 
                         name={'Hóa đơn'} 
-                        image={require('../assets/categoryadd.png')}/>
+                        image={require('../assets/hoadon.png')}/>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => navigation.navigate("StatisticsScreen")}>
+                    <AddProduct 
+                        name={'Thống kê'} 
+                        image={require('../assets/bieudo.png')}/>
                 </TouchableOpacity>
             </View>
         </View>

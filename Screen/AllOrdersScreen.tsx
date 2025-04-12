@@ -80,7 +80,6 @@ const AllOrdersScreen = () => {
   };
 
   // Update Order Status Function
-  // Update Order Status Function
   const updateOrderStatus = async (status: string) => {
     if (!selectedOrder || !selectedOrder.orderId) {
       Alert.alert('Lỗi', 'Không thể cập nhật trạng thái đơn hàng');
@@ -112,10 +111,50 @@ const AllOrdersScreen = () => {
           if (orderData.orderId === selectedOrder.orderId) {
             const orderRef = database().ref(`/users/${userKey}/orders/${orderKey}`);
   
+            // Lấy trạng thái cũ của đơn hàng trước khi cập nhật
+            const previousStatus = orderData.status;
+  
             // Cập nhật trạng thái cho đơn hàng
             await orderRef.update({
               status: status
             });
+  
+            // Nếu đơn hàng chuyển từ trạng thái khác sang "Đã hoàn thành", cập nhật số lượt bán
+            if (status === 'Đã hoàn thành' && previousStatus !== 'Đã hoàn thành') {
+              // Cập nhật số lượt bán cho tất cả sản phẩm trong đơn hàng
+              if (orderData.orderItems && orderData.orderItems.length > 0) {
+                // Lấy reference đến node products
+                const productsRef = database().ref('/products');
+                
+                // Lấy tất cả sản phẩm
+                const productsSnapshot = await productsRef.once('value');
+                const products = productsSnapshot.val();
+                
+                // Cập nhật số lượt bán cho từng sản phẩm trong đơn hàng
+                for (const item of orderData.orderItems) {
+                  // Tìm sản phẩm trong database
+                  for (const productKey in products) {
+                    const product = products[productKey];
+                    
+                    // Kiểm tra xem đây có phải là sản phẩm cần cập nhật không
+                    if (product.product_name === item.cartItemName) {
+                      const productRef = database().ref(`/products/${productKey}`);
+                      
+                      // Lấy số lượng bán hiện tại hoặc mặc định là 0 nếu chưa có
+                      const currentSales = product.product_salescount || 0;
+                      
+                      // Cập nhật số lượng bán bằng cách cộng thêm số lượng trong đơn hàng
+                      await productRef.update({
+                        product_salescount: currentSales + parseInt(item.cartItemQuantity)
+                      });
+                      
+                      console.log(`Đã cập nhật số lượt bán cho sản phẩm ${item.cartItemName}. Tổng: ${currentSales + parseInt(item.cartItemQuantity)}`);
+                      break; // Thoát sau khi đã tìm thấy và cập nhật sản phẩm
+                    }
+                  }
+                }
+              }
+            }
   
             // Cập nhật lại orders trong state
             setOrders(prevOrders => 
@@ -130,9 +169,14 @@ const AllOrdersScreen = () => {
             setSelectedOrder({ ...selectedOrder, status: status });
   
             Alert.alert('Thành công', `Đơn hàng đã được cập nhật thành "${status}"`);
+            return; // Thoát khỏi hàm sau khi cập nhật thành công
           }
         }
       }
+      
+      // Nếu không tìm thấy đơn hàng
+      Alert.alert('Thông báo', 'Không tìm thấy đơn hàng cần cập nhật');
+      
     } catch (error) {
       console.error('Error updating order status:', error);
       Alert.alert('Lỗi', 'Không thể cập nhật trạng thái đơn hàng');
